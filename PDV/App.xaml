@@ -1,0 +1,51 @@
+﻿<Application x:Class="PDV.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"             
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:vm="clr-namespace:PDV.ViewModels" xmlns:views="clr-namespace:PDV.Views">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="DeepPurple" SecondaryColor="Lime" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <DataTemplate DataType="{x:Type vm:ProductListManager}">
+                <views:ProductList />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:ProductListHome}">
+                <views:Home VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:Main}">
+                <Grid>
+                    <Grid>
+                        <Grid.InputBindings>
+                            <KeyBinding Key="M" Command="{Binding OpenMenuGeral}" />
+                        </Grid.InputBindings>
+                        <ContentControl Content="{Binding Current}" />
+                    </Grid>
+                    <Grid Visibility="{Binding IsMenuGeralOpen,Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Grid.InputBindings>
+                            <KeyBinding Key="Esc" Command="{Binding CloseMenuGeneral}" />
+                        </Grid.InputBindings>
+                        <Grid.Background>
+                            <SolidColorBrush Color="Black" Opacity=".32"/>
+                        </Grid.Background>
+                        <Border CornerRadius="16" Width="400" Height="400" Background="White" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <StackPanel>
+                                <TextBlock Text="{Binding GeneralMenu.Title}" Style="{StaticResource MaterialDesignHeadline2TextBlock}"/>
+                                <TextBox />
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:SaleInfo}">
+                <views:SaleInfo />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:ProductListCart}">
+                <views:ProductListChart Margin="16" />
+            </DataTemplate>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

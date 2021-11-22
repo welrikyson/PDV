@@ -12,25 +12,15 @@ namespace PDV.ViewModels
     {
         private Action? _onSearchTermChange;
 
-        public ProductListManager(ICommand cancel, ICommand productListFinalize)
+        public ProductListManager()
         {
-            _onSearchTermChange += OnSearchTermChangedFirstTime;
-            ProductListFinalize = productListFinalize;
-            Cancel = cancel;
-        }
-
-        public ICommand Cancel { get; }
-        public ICommand ProductListFinalize { get; }
+            _onSearchTermChange += OnSearchTermChangedFirstTime;            
+        }        
         public IEnumerable<ICommand> ProductListManagerCommands { get; set; } = Enumerable.Empty<ICommand>();
-
-        
+                
         private void OnSearchTermChangedFirstTime()
         {
-            Current = new ProductListCart(Mock.CartItems);
-            ProductListManagerCommands = new List<ICommand>
-            {
-                ProductListFinalize
-            };
+            Current = new ProductListCart(Mock.CartItems);            
             NotifyChanged(nameof(Current));
             NotifyChanged(nameof(ProductListManagerCommands));
             _onSearchTermChange -=

@@ -10,7 +10,7 @@ namespace PDV.Views
     {
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent();                        
         }
     }
 }

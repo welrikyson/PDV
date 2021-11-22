@@ -6,13 +6,14 @@ namespace PDV.Commands
 {
     public class BackToAddMoreItems : ICommand
     {
-        public BackToAddMoreItems(Main main, ProductListManager lastProductManager)
+        public BackToAddMoreItems(Navigator navigator, ProductListManager lastProductManager)
         {
-            Main = main;
+            Navigator = navigator;
             LastProductManager = lastProductManager;
         }
 
-        private Main Main { get; }
+        public Navigator Navigator { get; }
+
         private ProductListManager LastProductManager { get; }
 
         public event EventHandler? CanExecuteChanged;
@@ -24,7 +25,7 @@ namespace PDV.Commands
 
         public void Execute(object? parameter)
         {
-            Main.NavigateToProductListManager(LastProductManager);
+            Navigator.NavigateToProductListManager(LastProductManager);
         }
     }
 }

@@ -6,12 +6,12 @@ namespace PDV.Commands
 {
     public class Cancel : ICommand
     {
-        public Cancel(Main main)
+        public Cancel(Navigator navigator)
         {
-            Main = main;
+            Navigator = navigator;
         }
-
-        private Main Main { get; }
+        
+        public Navigator Navigator { get; }
 
         public event EventHandler? CanExecuteChanged;
 
@@ -22,7 +22,7 @@ namespace PDV.Commands
 
         public void Execute(object? parameter)
         {
-            Main.NavigateToProductListManager();
+            Navigator.NavigateToProductListManager();
             OnCancel?.Invoke(this, EventArgs.Empty);
         }
 

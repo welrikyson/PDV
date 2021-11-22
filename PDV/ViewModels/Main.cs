@@ -9,42 +9,21 @@ namespace PDV.ViewModels
     {
 
         public GeneralMenu GeneralMenu { get; set; } = new GeneralMenu();
-        public Main()
-        {
-            Current = new ProductListManager(new Cancel(this), new ProductListFinalize(this));
+        public Navigator Navigator { get; set; }
+        public Main(Navigator navigator)
+        {            
+            Navigator = navigator;
             OpenMenuGeral = new OpenMenuGeral(this);
             CloseMenuGeneral = new CloseMenu(this);
+            Navigator.NavigateToProductListManager();
         }
 
-        public INavegable Current { get; private set; }
-
-        public void NavigateToSalesInfo(ProductListManager from)
-        {
-            Current = new SaleInfo(from, new Cancel(this), new BackToAddMoreItems(this, from));
-
-            NotifyChanged(nameof(Current));
-        }
-
-        public void NavigateToProductListManager()
-        {
-            Current = new ProductListManager(
-                new Cancel(this),
-                new ProductListFinalize(this));
-            Current.ShouldExecutePreset = true;
-            NotifyChanged(nameof(Current));
-        }
-
-        public void NavigateToProductListManager(INavegable lastProductManager)
-        {
-            Current = lastProductManager;
-            Current.ShouldExecutePreset = true;
-            NotifyChanged(nameof(Current));
-        }
+        public INavegable Current { get=> Navigator.Current; }
 
         public ICommand OpenMenuGeral { get; }
         public ICommand CloseMenuGeneral { get; }
 
-        private bool _isMenuGeralOpen;
+        private bool _isMenuGeralOpen = true;
         public bool IsMenuGeralOpen
         {
             get => _isMenuGeralOpen;

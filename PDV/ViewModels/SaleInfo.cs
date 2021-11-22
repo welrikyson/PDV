@@ -6,17 +6,13 @@ namespace PDV.ViewModels
 {
     public class SaleInfo : NotifyPropertyChanged, INavegable
     {
-        public SaleInfo(ProductListManager listManager, ICommand cancel, ICommand backToAddMoreItems)
+        public SaleInfo(ProductListManager listManager)
         {
-            ListManager = listManager;
-            Cancel = cancel;
-            BackToAddMoreItems = backToAddMoreItems;
+            ListManager = listManager;            
         }
 
         public ProductListManager ListManager { get; }
-        public ICommand Cancel { get; }
-
-        public ICommand BackToAddMoreItems { get; set; }
+        
         public bool ShouldExecutePreset { get; set; }
     }
 }

@@ -11,10 +11,7 @@
              d:DataContext="{d:DesignInstance Type={x:Type vm:ProductListManager}}"
              FocusManager.FocusedElement="{Binding ElementName=SearchTermTxb}"
              behaviors:NavegableControlBehavior.SholdInitialize="{Binding ShouldExecutePreset,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
-    <UserControl.InputBindings>
-        <KeyBinding Command="{Binding Cancel}" Key="Space" Modifiers="Ctrl" />
-        <KeyBinding Command="{Binding ProductListFinalize}" Key="Return" Modifiers="Ctrl" />
-    </UserControl.InputBindings>
+
     <Grid Margin="64">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -46,7 +43,7 @@
                         </Border>
                     </md:PopupBox.ToggleContent>
                     <StackPanel>
-                        <Button Command="{Binding Cancel}">Cancelar venda</Button>
+                        <Button>Cancelar venda</Button>
                     </StackPanel>
                 </md:PopupBox>
             </StackPanel>

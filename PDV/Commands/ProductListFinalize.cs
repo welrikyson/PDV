@@ -6,12 +6,12 @@ namespace PDV.Commands
 {
     public class ProductListFinalize : ICommand
     {
-        private readonly Main _main;
-
-        public ProductListFinalize(Main main)
+        public ProductListFinalize(Navigator navigator)
         {
-            _main = main;
+            Navigator = navigator;
         }
+
+        public Navigator Navigator { get; }
 
         public event EventHandler? CanExecuteChanged;
 
@@ -22,8 +22,8 @@ namespace PDV.Commands
 
         public void Execute(object? parameter)
         {
-            if (_main.Current is ProductListManager productListManager)
-                _main.NavigateToSalesInfo(productListManager);
+            if (Navigator.Current is ProductListManager productListManager)
+                Navigator.NavigateToSalesInfo(productListManager);
         }
     }
 }

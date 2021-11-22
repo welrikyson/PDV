@@ -25,6 +25,7 @@ namespace PDV.Commands
 
         public void Execute(object? parameter)
         {
+            Main.IsMenuGeralOpen = false;
             Main.IsMenuGeralOpen = true;
         }
     }

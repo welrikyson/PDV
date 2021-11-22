@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PDV.Controls.Extensions;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -34,17 +35,13 @@ namespace PDV.Views
             content.CreateNewBooleanTrigger(receviesValue: true,
                                             inProperty: new(IsEnabledProperty),
                                             whenEvent: Controls.Dialog.ClosedEvent,
-                                            inElement: Dialog);
-            FocusManager.AddLostFocusHandler(content, OnLostFocus);
+                                            inElement: Dialog);            
             content.IsEnabledChanged += ContentEnableChangedHandler;
         }
 
         private Style CreatNewDialogStyle(Style from)
         {
-            Style dialogStyle = new Style(typeof(Controls.Dialog), from)
-            {
-
-            };
+            Style dialogStyle = new (typeof(Controls.Dialog), from);
             var trigger = new Trigger()
             {
                 Property = Controls.Dialog.IsOpenProperty,
@@ -64,53 +61,9 @@ namespace PDV.Views
         private void ContentEnableChangedHandler(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (e.NewValue.Equals(true))
-            {                
-                if (LastFocusableElement == null) return;
-                Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    LastFocusableElement.Focus();
-                }), System.Windows.Threading.DispatcherPriority.Render);
-            }
-        }
-
-        IInputElement? LastFocusableElement;
-        private void OnLostFocus(object sender, RoutedEventArgs e)
-        {            
-            if (e.OriginalSource is UIElement lastFocusedElement)
             {
-                LastFocusableElement = lastFocusedElement;
+                MainGrid.SetFocus();
             }
         }
     }
-
-    internal static class TriggersExtension
-    {
-        public static void CreateNewBooleanTrigger(this DependencyObject target,
-                                                   bool receviesValue,
-                                                   PropertyPath inProperty,
-                                                   RoutedEvent @whenEvent,
-                                                   FrameworkElement inElement)
-        {
-            BooleanAnimationUsingKeyFrames booleanAnimation = new()
-            {
-                BeginTime = TimeSpan.Zero,
-                Duration = TimeSpan.Zero,
-            };
-
-            booleanAnimation.
-                KeyFrames.Add(
-                new DiscreteBooleanKeyFrame() { Value = receviesValue, KeyTime = TimeSpan.Zero });
-            Storyboard storyboard = new();
-            storyboard.Children.Add(booleanAnimation);
-            Storyboard.SetTarget(storyboard, target);
-            Storyboard.SetTargetProperty(storyboard, inProperty);
-
-            EventTrigger eventTrigger = new();
-            eventTrigger.RoutedEvent = @whenEvent;
-            eventTrigger.Actions.Add(new BeginStoryboard() { Storyboard = storyboard });
-            
-            inElement.Triggers.Add(eventTrigger);
-        }
-    }
-
 }

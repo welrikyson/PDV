@@ -20,11 +20,32 @@ namespace PDV.Controls
                 typeof(MainGrid),
                 new FrameworkPropertyMetadata(typeof(MainGrid)));
         }
-       
+        public MainGrid()
+        {
+            FocusManager.AddLostFocusHandler(this, OnLostFocus);
+        }
+        private IInputElement? lastFocusableElement;
+        private void OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            if (e.OriginalSource is UIElement lastFocusedElement)
+            {
+                lastFocusableElement = lastFocusedElement;
+            }
+        }
+
+        public void SetFocus()
+        {
+            if (lastFocusableElement == null) return;
+            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                lastFocusableElement.Focus();
+            }), System.Windows.Threading.DispatcherPriority.Render);
+        }
+
         // Create a custom routed event by first registering a RoutedEventID
         // This event uses the bubbling routing strategy
         public static readonly RoutedEvent MKeyDownEvent = EventManager.RegisterRoutedEvent(
-            "MKeyDown",
+            nameof(MKeyDown),
             RoutingStrategy.Bubble,
             typeof(RoutedEventHandler),
             typeof(MainGrid));

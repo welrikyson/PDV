@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace PDV.Controls
 {
@@ -15,7 +16,7 @@ namespace PDV.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Dialog),
                                                      new FrameworkPropertyMetadata(typeof(Dialog)));
         }
-
+        
         public bool IsOpen
         {
             get { return (bool)GetValue(IsOpenProperty); }

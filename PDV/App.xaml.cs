@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MvvmDialogs;
 using PDV.Views;
 using System.Windows;
 
@@ -21,6 +22,7 @@ namespace PDV
                     {
                         DataContext = s.GetRequiredService<ViewModels.Main>()
                     });
+                    services.AddSingleton<IDialogService>(s => new DialogService( dialogTypeLocator: new DialogTypeLocator()));
                 })
                 .Build();
         }        

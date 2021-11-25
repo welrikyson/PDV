@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using PDV.Interfaces;
-using PDV.Mvvm;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 using PDV.Ultis.Moc;
 
 namespace PDV.ViewModels
 {
-    public class ProductListManager : NotifyPropertyChanged, INavegable
+    public class ProductListManager : ObservableObject, INavegable
     {
         private Action? _onSearchTermChange;
 
@@ -20,9 +20,9 @@ namespace PDV.ViewModels
                 
         private void OnSearchTermChangedFirstTime()
         {
-            Current = new ProductListCart(Mock.CartItems);            
-            NotifyChanged(nameof(Current));
-            NotifyChanged(nameof(ProductListManagerCommands));
+            Current = new ProductListCart(Mock.CartItems);
+            OnPropertyChanged(nameof(Current));
+            OnPropertyChanged(nameof(ProductListManagerCommands));
             _onSearchTermChange -=
                 OnSearchTermChangedFirstTime;
         }
@@ -35,12 +35,15 @@ namespace PDV.ViewModels
         {
             get => _searchTerm;
             set
-            {
-                _searchTerm = value;
+            {                
                 _onSearchTermChange?.Invoke();
-
-                NotifyChanged();
+                SetProperty(ref _searchTerm, value);
             }
+        }
+
+        private void OnSearchTermChanged(string obj)
+        {
+            throw new NotImplementedException();
         }
 
         private bool _shouldExecutePreset;
@@ -48,12 +51,7 @@ namespace PDV.ViewModels
         public bool ShouldExecutePreset
         {
             get => _shouldExecutePreset;
-            set
-            {
-                if (value == _shouldExecutePreset) return;
-                _shouldExecutePreset = value;
-                NotifyChanged();
-            }
+            set => SetProperty(ref _shouldExecutePreset, value);
         }
 
         public object Current { get; set; } = new ProductListHome();

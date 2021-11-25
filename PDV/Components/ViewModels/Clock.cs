@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Timers;
-using PDV.Mvvm;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 
 namespace PDV.Components.ViewModels
 {
-    public class Clock : NotifyPropertyChanged
+    public class Clock : ObservableObject
     {
         private static readonly TimeSpan TickTimeSpan = TimeSpan.FromMinutes(1);
         private readonly Timer _timer = new(TickTimeSpan.TotalMilliseconds);
@@ -20,9 +20,8 @@ namespace PDV.Components.ViewModels
         {
             get => _currentTime;
             private set
-            {
-                _currentTime = value;
-                NotifyChanged();
+            {                
+                SetProperty(ref _currentTime, value);
             }
         }
 

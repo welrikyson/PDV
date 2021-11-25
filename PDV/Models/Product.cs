@@ -1,4 +1,4 @@
-﻿using PDV.Mvvm;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,17 +12,17 @@ namespace PDV.Models
         public string Id { get; init; }
         public string Name { get; private set; }
         public decimal Price { get; private set; }
-        public Product(string id , string name, decimal price)
+        public Product(string id, string name, decimal price)
         {
             Id = id;
             Name = name;
             Price = price;
         }
 
-                
+
     }
 
-    public class ChartItem : NotifyPropertyChanged
+    public class ChartItem : ObservableObject
     {
         public ChartItem(Product product, int count)
         {
@@ -51,9 +51,8 @@ namespace PDV.Models
 
                 _count = value;
                 SetTotal(CalculeteTotal(_count));
-                
-                NotifyChanged(nameof(Count));
-                NotifyChanged(nameof(Total));
+                this.OnPropertyChanging(nameof(Count));
+                this.OnPropertyChanging(nameof(Total));
             }
         }
 
@@ -61,7 +60,7 @@ namespace PDV.Models
         {
             var oldValue = Total;
             Total = newValue;
-            TotalChange?.Invoke(oldValue,newValue);
+            TotalChange?.Invoke(oldValue, newValue);
         }
 
         public decimal Total { get; private set; }

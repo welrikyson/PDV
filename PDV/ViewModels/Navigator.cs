@@ -1,9 +1,9 @@
 ﻿using PDV.Interfaces;
-using PDV.Mvvm;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 
 namespace PDV.ViewModels
 {
-    public class Navigator : NotifyPropertyChanged
+    public class Navigator : ObservableObject
     {
         public Navigator(NavegableFactory navegableFactory)
         {
@@ -15,22 +15,21 @@ namespace PDV.ViewModels
         public void NavigateToSalesInfo(ProductListManager from)
         {
             Current = NavegableFactory.SaleInfo;
-
-            NotifyChanged(nameof(Current));
+            OnPropertyChanged(nameof(Current));            
         }
 
         public void NavigateToProductListManager()
         {
             Current = NavegableFactory.ProductListManager;
             Current.ShouldExecutePreset = true;
-            NotifyChanged(nameof(Current));
+            OnPropertyChanged(nameof(Current));
         }
 
         public void NavigateToProductListManager(INavegable lastProductManager)
         {
             Current = lastProductManager;
             Current.ShouldExecutePreset = true;
-            NotifyChanged(nameof(Current));
+            OnPropertyChanged(nameof(Current));
         }
     }
 }

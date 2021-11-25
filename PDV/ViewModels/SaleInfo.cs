@@ -1,10 +1,10 @@
 ﻿using System.Windows.Input;
 using PDV.Interfaces;
-using PDV.Mvvm;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 
 namespace PDV.ViewModels
 {
-    public class SaleInfo : NotifyPropertyChanged, INavegable
+    public class SaleInfo : ObservableObject, INavegable
     {
         public SaleInfo(ProductListManager listManager)
         {

@@ -35,13 +35,25 @@ namespace PDV.Views
             content.CreateNewBooleanTrigger(receviesValue: true,
                                             inProperty: new(IsEnabledProperty),
                                             whenEvent: Controls.Dialog.ClosedEvent,
-                                            inElement: Dialog);            
-            content.IsEnabledChanged += ContentEnableChangedHandler;
+                                            inElement: Dialog);
+            content.IsEnabledChanged += ContentIsEnableHandler;
         }
 
+        private DependencyPropertyChangedEventHandler ContentIsEnableHandler
+        {
+            get => (s, e) =>
+            {
+                if (e.NewValue.Equals(true))
+                {
+                    MainGrid.SetFocus();
+                }
+            };
+        }
+
+        #region DialogStyle
         private Style CreatNewDialogStyle(Style from)
         {
-            Style dialogStyle = new (typeof(Controls.Dialog), from);
+            Style dialogStyle = new(typeof(Controls.Dialog), from);
             var trigger = new Trigger()
             {
                 Property = Controls.Dialog.IsOpenProperty,
@@ -57,13 +69,6 @@ namespace PDV.Views
 
             return dialogStyle;
         }
-
-        private void ContentEnableChangedHandler(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.NewValue.Equals(true))
-            {
-                MainGrid.SetFocus();
-            }
-        }
+        #endregion
     }
 }

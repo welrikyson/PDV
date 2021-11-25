@@ -1,24 +1,30 @@
 ﻿using PDV.Commands;
 using PDV.Interfaces;
-using PDV.Mvvm;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System.Windows.Input;
+using MvvmDialogs;
+using System.Threading.Tasks;
 
 namespace PDV.ViewModels
 {
-    public class Main : NotifyPropertyChanged
+    public class Main : ObservableObject
     {
 
         public GeneralMenu GeneralMenu { get; set; } = new GeneralMenu();
-        public Navigator Navigator { get; set; }
-        public Main(Navigator navigator)
+        private readonly Navigator _navigator;
+        private readonly IDialogService dialogService;
+
+        public Main(Navigator navigator, IDialogService dialogService)
         {            
-            Navigator = navigator;
+            _navigator = navigator;
+            this.dialogService = dialogService;
             OpenMenuGeral = new OpenMenuGeral(this);
             CloseMenuGeneral = new CloseMenu(this);
-            Navigator.NavigateToProductListManager();
+            _navigator.NavigateToProductListManager();
+            IsMenuGeralOpen = false;         
         }
-
-        public INavegable Current { get=> Navigator.Current; }
+        
+        public INavegable Current { get=> _navigator.Current; }
 
         public ICommand OpenMenuGeral { get; }
         public ICommand CloseMenuGeneral { get; }
@@ -27,7 +33,7 @@ namespace PDV.ViewModels
         public bool IsMenuGeralOpen
         {
             get => _isMenuGeralOpen;
-            set { _isMenuGeralOpen = value; NotifyChanged(); }
+            set { SetProperty(ref _isMenuGeralOpen, value); }
         }
     }
 }

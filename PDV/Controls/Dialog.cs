@@ -25,7 +25,7 @@ namespace PDV.Controls
 
         // Using a DependencyProperty as the backing store for IsOpen.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsOpenProperty =
-            DependencyProperty.Register("IsOpen",
+            DependencyProperty.Register(nameof(IsOpen),
                                         typeof(bool),
                                         typeof(Dialog),
                                         new FrameworkPropertyMetadata(false,
@@ -34,6 +34,7 @@ namespace PDV.Controls
 
         private static void OnIsOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+            
             var dialog = (Dialog)d;
             dialog.OnIsOpenChanged();            
         }
@@ -71,10 +72,12 @@ namespace PDV.Controls
         {
             if (IsOpen)
             {
+                SetValue(IsOpenProperty, true);
                 RaiseEvent(new(OpenedEvent));
             }
             else
             {
+                SetValue(IsOpenProperty, false);
                 RaiseEvent(new(ClosedEvent));
             }
         }

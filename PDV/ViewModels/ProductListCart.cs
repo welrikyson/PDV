@@ -4,11 +4,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using PDV.Interfaces;
 using PDV.Models;
-using PDV.Mvvm;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 
 namespace PDV.ViewModels
 {
-    public class ProductListCart : NotifyPropertyChanged, INavegable
+    public class ProductListCart : ObservableObject, INavegable
     {
         public IList<ChartItem> CartItems { get; private set; } = new ObservableCollection<ChartItem>();
         public bool ShouldExecutePreset { set; get; }
@@ -39,7 +39,7 @@ namespace PDV.ViewModels
         private void AddOnTotalAndNotify(decimal value)
         {
             Total += value;
-            NotifyChanged(nameof(Total));
+            OnPropertyChanged(nameof(Total));
         }
 
         public decimal Total { get; private set; } = 0;

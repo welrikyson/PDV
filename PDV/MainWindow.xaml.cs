@@ -1,4 +1,5 @@
 ﻿using PDV.Commands;
+using System.Windows;
 using System.Windows.Input;
 
 namespace PDV.Views
@@ -11,6 +12,10 @@ namespace PDV.Views
         public MainWindow()
         {
             InitializeComponent();                        
+        }
+        private void Dialog_Closed(object sender, RoutedEventArgs e)
+        {
+            MainGrid.SetFocus();
         }
     }
 }

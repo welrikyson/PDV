@@ -22,7 +22,7 @@ namespace PDV.Views
     {
         public GereralMenu()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
 
         public bool IsOpen
@@ -34,7 +34,6 @@ namespace PDV.Views
         // Using a DependencyProperty as the backing store for IsOpen.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsOpenProperty =
             DependencyProperty.Register("IsOpen", typeof(bool), typeof(GereralMenu), new PropertyMetadata(false));
-
-
+        
     }
 }

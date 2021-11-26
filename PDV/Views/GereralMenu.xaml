@@ -4,38 +4,28 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PDV.Views"
+             xmlns:vms="clr-namespace:PDV.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources>
-        <x:Array xmlns:s="clr-namespace:System;assembly=mscorlib" x:Key="array" Type="{x:Type s:String}">
-            <s:String>1</s:String>
-            <s:String>2</s:String>
-            <s:String>3</s:String>
-            <s:String>4</s:String>
-            <s:String>5</s:String>
-            <s:String>6</s:String>
-            <s:String>7</s:String>
-            <s:String>8</s:String>
-        </x:Array>
-    </UserControl.Resources>
-
-    <ItemsControl ItemsSource="{StaticResource array}" Margin="0 0 8 0">
-        <ItemsControl.ItemsPanel>
-            <ItemsPanelTemplate>
-                <UniformGrid Rows="4" Columns="2" />
-            </ItemsPanelTemplate>
-        </ItemsControl.ItemsPanel>
-        <ItemsControl.ItemTemplate>
-            <DataTemplate>
-                <Button HorizontalContentAlignment="Left" Height="80" Margin="8 0 0 8" Style="{StaticResource MaterialDesignOutlinedButton}">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                        <Border CornerRadius="16" Background="{StaticResource MaterialDesignDarkBackground}">
-                            <TextBlock Text="{Binding}" Margin="16"  Style="{StaticResource MaterialDesignHeadline6TextBlock}"></TextBlock>
-                        </Border>
-                        <TextBlock Text="Buscar Item"  Margin="16 0 0 0" VerticalAlignment="Center"></TextBlock>
-                    </StackPanel>
-                </Button>
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
-    </ItemsControl>
+             xmlns:uc="clr-namespace:PDV.Components.UserControls"
+             xmlns:mb="http://schemas.microsoft.com/xaml/behaviors"
+             d:DataContext="{d:DesignInstance Type=vms:MenuOptions, IsDesignTimeCreatable=True}"
+             d:DesignHeight="450" d:DesignWidth="800">    
+    <Grid DataContext="{Binding MenuOption}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <uc:Option DataContext="{Binding OptionFindItem}" 
+                   Grid.Column="0" Grid.Row="0"/>
+        <uc:Option DataContext="{Binding OptionEnd}" 
+                   Grid.Column="1" Grid.Row="0"/>
+        <uc:Option DataContext="{Binding OptionClose}" 
+                   Grid.Column="0" Grid.Row="1"/>
+        <uc:Option DataContext="{Binding OptionFindItem}" 
+                   Grid.Column="1" Grid.Row="1"/>
+    </Grid>
 </UserControl>

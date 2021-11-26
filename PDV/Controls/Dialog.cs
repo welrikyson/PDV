@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PDV.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,13 +11,78 @@ using System.Windows.Input;
 namespace PDV.Controls
 {
     public class Dialog : ContentControl
-    {   
+    {
+        public IDialogService DialogService
+        {
+            get { return (IDialogService)GetValue(DialogServiceProperty); }
+            set { SetValue(DialogServiceProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for DialogService.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty DialogServiceProperty =
+            DependencyProperty.Register(nameof(DialogService), typeof(IDialogService), typeof(Dialog), new PropertyMetadata(propertyChangedCallback: DialogServiceChangedHandler));
+
+        private static void DialogServiceChangedHandler(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var dialog = (Dialog)d;
+            dialog.DialogServiceChangedHandler(e.NewValue);
+        }
+        private void DialogServiceChangedHandler(object newValue)
+        {
+            if(newValue is IDialogService dialogService)
+            {                
+                dialogService.OpenDialogEvent +=
+                                OnOpenedDialogHandler;
+
+                dialogService.CloseDialogEvent +=
+                     OnClosedDialogHandler;
+            }
+        }        
+        
+
+        private void OnOpenedDialogHandler(object content)
+        {
+            Content = content;
+            IsOpen = true;
+            Focus();
+            
+            if(Parent is Grid grid)
+            {                
+                foreach (UIElement item in grid.Children)
+                {
+                    if (item.Equals(this)) continue;
+                    item.IsEnabled = false;
+                } 
+            } 
+            
+        }
+
+        private void OnClosedDialogHandler(object content)
+        {
+            if (Parent is Grid grid)
+            {
+                foreach (UIElement item in grid.Children)
+                {
+                    if (item.Equals(this)) continue;
+                    item.IsEnabled = true;
+                }
+            }
+            IsOpen = false;                        
+        }
+
         static Dialog()
         {   
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Dialog),
                                                      new FrameworkPropertyMetadata(typeof(Dialog)));
+            
+        }        
+
+        protected override void OnGotFocus(RoutedEventArgs e)
+        {
+            base.OnGotFocus(e);
+            UpdateLayout();
+            MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
         }
-        
         public bool IsOpen
         {
             get { return (bool)GetValue(IsOpenProperty); }
@@ -28,10 +94,10 @@ namespace PDV.Controls
             DependencyProperty.Register(nameof(IsOpen),
                                         typeof(bool),
                                         typeof(Dialog),
-                                        new FrameworkPropertyMetadata(false,
+                                        new FrameworkPropertyMetadata(default(bool),
                                                                       FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                                                                       OnIsOpenChanged));
-
+        
         private static void OnIsOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             
@@ -72,12 +138,11 @@ namespace PDV.Controls
         {
             if (IsOpen)
             {
-                SetValue(IsOpenProperty, true);
+                
                 RaiseEvent(new(OpenedEvent));
             }
             else
-            {
-                SetValue(IsOpenProperty, false);
+            {                
                 RaiseEvent(new(ClosedEvent));
             }
         }

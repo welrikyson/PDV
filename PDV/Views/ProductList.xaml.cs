@@ -7,9 +7,9 @@ namespace PDV.Views
     /// <summary>
     ///     Interaction logic for ProductList.xaml
     /// </summary>
-    public partial class ProductList : IHavePresets
+    public partial class ProductListManager : IHavePresets
     {
-        public ProductList()
+        public ProductListManager()
         {
             InitializeComponent();
             CommandBindings.Add(new CommandBinding(

@@ -1,4 +1,4 @@
-﻿namespace PDV.Views
+﻿namespace PDV.Views.ProductList
 {
     /// <summary>
     ///     Interaction logic for Home.xaml

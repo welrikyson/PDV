@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MvvmDialogs;
 using PDV.Views;
+using System;
 using System.Windows;
 
 namespace PDV
@@ -14,60 +14,61 @@ namespace PDV
         private readonly IHost _host;
         public App()
         {
-            _host = Host.CreateDefaultBuilder()
+            var hostbuilder = ConfigureHostBuilder();
+            _host = hostbuilder.Build();
+        }
+
+
+        private static IHostBuilder ConfigureHostBuilder() =>
+            Host.CreateDefaultBuilder()
                 .AddViewModels()
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddSingleton(s => new MainWindow()
-                    {
-                        DataContext = s.GetRequiredService<ViewModels.Main>()
-                    });
-                    services.AddSingleton<IDialogService>(s => new DialogService( dialogTypeLocator: new DialogTypeLocator()));
-                })
-                .Build();
-        }        
+                    services.AddSingleton<ViewModelLocator>();
+                    services.AddSingleton<MainWindow>();
+                });
+
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            _host.Start();
-            _host.Services.GetRequiredService<MainWindow>().Show();            
             base.OnStartup(e);
+            _host.Start();
 
+            var serviceProvider = _host.Services;
+            if (Resources["ViewModelLocator"] is ViewModelLocator viewModelLocator)
+            {
+                viewModelLocator.ServiceProvider = serviceProvider;
+            }
+
+            serviceProvider.GetRequiredService<MainWindow>().Show();
         }
     }
     public static class AddViewModelsHostBuilderExtensions
     {
-        public static IHostBuilder AddViewModels(this IHostBuilder hostBuilder)
-        {
+        public static IHostBuilder AddViewModels(this IHostBuilder hostBuilder) =>
             hostBuilder.ConfigureServices(services =>
             {
-                services.AddSingleton<ViewModels.Navigator>();
-                services.AddTransient<Commands.Cancel>();
-                services.AddTransient<Commands.ProductListFinalize>();
-
-                services.AddTransient<ViewModels.ProductListManager>();
-
-                services.AddSingleton<ViewModels.NavegableFactory>(n =>
-                {
-                    var productListManager = n.GetRequiredService<ViewModels.ProductListManager>();
-                    return new ViewModels.NavegableFactory()
-                    {
-                        SaleInfo = new ViewModels.SaleInfo(productListManager),
-                        ProductListManager = productListManager,
-                    };
-                });
-                services.AddSingleton<ViewModels.Main>();
+                services.AddSingleton<ViewModels.Navigator>()
+                        .AddTransient<Commands.Cancel>()
+                        .AddTransient<Commands.ProductListFinalize>()
+                        .AddTransient<ViewModels.ProductListManager>()
+                        .AddTransient<ViewModels.DialogService>()
+                        .AddSingleton(n =>
+                        {
+                            var productListManager = n.GetRequiredService<ViewModels.ProductListManager>();
+                            return new ViewModels.NavegableFactory()
+                            {
+                                SaleInfo = new ViewModels.SaleInfo(productListManager),
+                                ProductListManager = productListManager,
+                            };
+                        })
+                        .AddSingleton((serviceProvider) =>
+                        {
+                            var navigator = serviceProvider.GetService<ViewModels.Navigator>();
+                            var dialogService = serviceProvider.GetService<ViewModels.DialogService>();
+                            return new ViewModels.Main(navigator, dialogService);
+                        });
 
             });
-
-            return hostBuilder;
-        }
-
-        //private static ReservationListingViewModel CreateReservationListingViewModel(IServiceProvider services)
-        //{
-        //    return ReservationListingViewModel.LoadViewModel(
-        //        services.GetRequiredService<HotelStore>(),
-        //        services.GetRequiredService<NavigationService<MakeReservationViewModel>>());
-        //}
     }
 }

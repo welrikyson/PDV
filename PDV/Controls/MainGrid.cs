@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace PDV.Controls
 {
@@ -24,22 +25,21 @@ namespace PDV.Controls
         {
             FocusManager.AddLostFocusHandler(this, OnLostFocus);
         }
-        private IInputElement? lastFocusableElement;
+        public IInputElement? LastFocusableElement { get; private set; }
         private void OnLostFocus(object sender, RoutedEventArgs e)
         {
             if (e.OriginalSource is UIElement lastFocusedElement)
             {
-                lastFocusableElement = lastFocusedElement;
+                LastFocusableElement = lastFocusedElement;
             }
         }
 
         public void SetFocus()
         {
-            if (lastFocusableElement == null) return;
-            Application.Current.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                lastFocusableElement.Focus();
-            }), System.Windows.Threading.DispatcherPriority.Render);
+            if (LastFocusableElement == null) return;
+
+            Dispatcher.BeginInvoke(action: delegate () { LastFocusableElement.Focus(); },
+                                       priority: DispatcherPriority.Render);
         }
 
         // Create a custom routed event by first registering a RoutedEventID
@@ -68,8 +68,7 @@ namespace PDV.Controls
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
-            var popup = new Popup();
-            
+            if (e.Handled) return;
             if (e.Key == Key.M)
             {
                 RaiseSpaceKeyDownEvent();

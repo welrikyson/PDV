@@ -46,7 +46,7 @@
                 <TextBlock Text="Quantidade" Width="100" VerticalAlignment="Bottom" />
                 <controls:Numeric Value="{Binding Count,Mode=TwoWay}" Width="100" MinValue="1" TextAlignment="Right">                    
                     <controls:Numeric.InputBindings>
-                        <KeyBinding Key="Return" Command="{x:Static local:ProductList.GoToSearchTermField}"/>
+                        <KeyBinding Key="Return" Command="{x:Static local:ProductListManager.GoToSearchTermField}"/>
                     </controls:Numeric.InputBindings>
                 </controls:Numeric>                
             </StackPanel>

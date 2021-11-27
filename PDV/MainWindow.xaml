@@ -3,13 +3,9 @@
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                    xmlns:mde="https://spiegelp.github.io/MaterialDesignExtensions/winfx/xaml" 
-                    xmlns:views="clr-namespace:PDV.Views"
+                    xmlns:mde="https://spiegelp.github.io/MaterialDesignExtensions/winfx/xaml"                     
                     xmlns:vms="clr-namespace:PDV.ViewModels"
-                    xmlns:local="clr-namespace:PDV.Views" 
-                    xmlns:controls="clr-namespace:PDV.Controls" 
-                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-                    xmlns:mb="http://schemas.microsoft.com/xaml/behaviors"             
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:controls="clr-namespace:PDV.Controls" xmlns:mb="http://schemas.microsoft.com/xaml/behaviors" xmlns:local="clr-namespace:PDV.Views"
                     mc:Ignorable="d"                   
                     d:DesignHeight="450" d:DesignWidth="800" 
                     d:DataContext="{d:DesignInstance Type=vms:Main}"
@@ -21,53 +17,44 @@
                     TextOptions.TextRenderingMode="Auto"
                     FontFamily="{DynamicResource MaterialDesignFont}"
                     Background="{DynamicResource MaterialDesignPaper}"                    
-                    FadeContentIfInactive="False"
-                    WindowState="Maximized"                    
+                    FadeContentIfInactive="False"                    
                     WindowStartupLocation="CenterScreen"
                     MinHeight="600" MinWidth="800">
+    <Window.Resources>
+        <ControlTemplate x:Key="FrameTemplate" TargetType="Frame">
+            <DockPanel Margin="7">
+                
+                <Grid Margin="7" Width="200" HorizontalAlignment="Left"
+                      DockPanel.Dock="Top">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>                    
+                    <Button Content="Voltar" 
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            Command="{x:Static NavigationCommands.BrowseBack}" 
+                            IsEnabled="{TemplateBinding CanGoBack}"/>
+                    <Button Content="Avançar" Grid.Column="1"
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            Command="{x:Static NavigationCommands.BrowseForward}" 
+                            IsEnabled="{TemplateBinding CanGoForward}"/>
+                </Grid>
+
+                <materialDesign:Card UniformCornerRadius="16">
+                    <ContentPresenter Margin="16"/>
+                </materialDesign:Card>
+            </DockPanel>
+        </ControlTemplate>
+    </Window.Resources>
+
 
     <Grid>
         <controls:MainGrid x:Name="MainGrid" 
-                           SholdConsumeOnKeyMPressed="True">
-            <Frame x:Name="content"
-                   Content="{Binding Current}" />
-            <mb:Interaction.Triggers>
-                <mb:EventTrigger EventName="MKeyDown">
-                    <mb:InvokeCommandAction Command="{Binding Path=OpenMenuGeral, Mode=OneWay}"/>
-                </mb:EventTrigger>
-            </mb:Interaction.Triggers>
+                           SholdConsumeOnKeyMPressed="True" MKeyDown="MainGrid_MKeyDown">
+            <Frame x:Name="frame" Template="{StaticResource FrameTemplate}"/>            
         </controls:MainGrid>
 
-        <controls:Dialog DialogService="{Binding DialogService}" 
-                         Closed="Dialog_Closed">
-            <controls:Dialog.Resources>
-                <DataTemplate DataType="{x:Type vms:MenuOptions}">
-                    <materialDesign:Card Focusable="True"
-                                         UniformCornerRadius="16" 
-                                         Width="600" x:Name="Card" 
-                                         VerticalAlignment="Center" HorizontalAlignment="Center">
-
-                        <materialDesign:Card.InputBindings>
-                            <KeyBinding Command="{Binding MenuOption.OptionClose.Selected}" Key="{Binding MenuOption.OptionClose.Key}"/>
-                            <KeyBinding Command="{Binding MenuOption.OptionEnd.Selected}" Key="{Binding MenuOption.OptionEnd.Key}"/>
-                            <KeyBinding Command="{Binding MenuOption.OptionFindItem.Selected}" Key="{Binding MenuOption.OptionFindItem.Key}"/>
-                        </materialDesign:Card.InputBindings>
-                        <StackPanel Margin="8 0 8 16">
-                            <Button IsCancel="True"
-                                    HorizontalAlignment="Right"
-                                    Content="{materialDesign:PackIcon Kind=CloseBold}"
-                                    Style="{StaticResource MaterialDesignFlatButton}">
-                                <!--<mb:Interaction.Triggers>
-                                    <mb:EventTrigger EventName="Click">
-                                        <mb:InvokeCommandAction Command="{Binding CloseMenuGeneral}"/>
-                                    </mb:EventTrigger>
-                                </mb:Interaction.Triggers>-->
-                            </Button>
-                            <local:GereralMenu />
-                        </StackPanel>
-                    </materialDesign:Card>
-                </DataTemplate>
-            </controls:Dialog.Resources>
-        </controls:Dialog>
+        <controls:Dialog x:Name="Dialog" DialogService="{Binding DialogService}" 
+                         Closed="Dialog_Closed" />
     </Grid>
 </mde:MaterialWindow>

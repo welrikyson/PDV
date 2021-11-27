@@ -1,6 +1,4 @@
-﻿using PDV.Commands;
-using System.Windows;
-using System.Windows.Input;
+﻿
 
 namespace PDV.Views
 {
@@ -11,11 +9,27 @@ namespace PDV.Views
     {
         public MainWindow()
         {
-            InitializeComponent();                        
+            InitializeComponent();             
+            frame.Navigate(new DefaultPage());
         }
-        private void Dialog_Closed(object sender, RoutedEventArgs e)
+
+        private void Dialog_Closed(object sender, System.Windows.RoutedEventArgs e)
         {
-            MainGrid.SetFocus();
+            MainGrid.SetFocus(); 
+        }
+
+        private void MainGrid_MKeyDown(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var menuOptions = new ViewModels.MenuOptions();
+            
+            Dialog.DialogService.ShowDialog(new Views.GereralMenu()
+            {
+                DataContext = menuOptions
+            });
+            menuOptions.OptionSelected += () =>
+            {
+                Dialog.DialogService.CloseDialog();
+            };
         }
     }
 }

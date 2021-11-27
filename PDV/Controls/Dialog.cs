@@ -1,4 +1,5 @@
 ﻿using PDV.Interfaces;
+using PDV.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace PDV.Controls
 
         // Using a DependencyProperty as the backing store for DialogService.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DialogServiceProperty =
-            DependencyProperty.Register(nameof(DialogService), typeof(IDialogService), typeof(Dialog), new PropertyMetadata(propertyChangedCallback: DialogServiceChangedHandler));
+            DependencyProperty.Register(nameof(DialogService), typeof(IDialogService), typeof(Dialog), new PropertyMetadata(new DialogService(),propertyChangedCallback: DialogServiceChangedHandler));
 
         private static void DialogServiceChangedHandler(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

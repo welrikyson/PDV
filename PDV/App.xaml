@@ -8,7 +8,7 @@
     <Application.Resources>        
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <materialDesign:BundledTheme BaseTheme="Dark" PrimaryColor="DeepPurple" SecondaryColor="Lime" >
+                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="Amber" SecondaryColor="Indigo" >
                     
                 </materialDesign:BundledTheme>
                 <ResourceDictionary

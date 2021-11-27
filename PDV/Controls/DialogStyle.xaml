@@ -20,7 +20,7 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    <Style TargetType="controls:Dialog">        
+    <Style TargetType="controls:Dialog">
         <Style.Setters>
             <Setter Property="Visibility" Value="Hidden" />
             <Setter Property="Template">
@@ -28,12 +28,22 @@
                     <ControlTemplate>
                         <Grid>
                             <Grid Style="{StaticResource GridGlass}" x:Name="Glass" Visibility="{TemplateBinding Visibility}"/>
-                            <ContentPresenter x:Name="ContentPresenter" 
-                                              Grid.Row="1" Opacity="1"
-                                              VerticalAlignment="{TemplateBinding VerticalAlignment}"
-                                              Content="{TemplateBinding ContentControl.Content}" 
-                                              ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" 
-                                              ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}"/>
+                            <materialDesign:Card Focusable="True"
+                                                 UniformCornerRadius="16" 
+                                                 VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <StackPanel Margin="8 0 8 16">
+                                    <Button IsCancel="True"
+                                            HorizontalAlignment="Right"
+                                            Content="{materialDesign:PackIcon Kind=CloseBold}"
+                                            Style="{StaticResource MaterialDesignFlatButton}">
+                                    </Button>
+                                    <ContentPresenter x:Name="ContentPresenter" 
+                                                      Grid.Row="1" Opacity="1"                                              
+                                                      Content="{TemplateBinding ContentControl.Content}" 
+                                                      ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" 
+                                                      ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}"/>
+                                </StackPanel>
+                            </materialDesign:Card>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -42,7 +52,7 @@
         <Style.Triggers>
             <Trigger Property="IsOpen" Value="True">
                 <Setter Property="Visibility" Value="Visible" />
-            </Trigger>            
+            </Trigger>
         </Style.Triggers>
     </Style>
 </ResourceDictionary>

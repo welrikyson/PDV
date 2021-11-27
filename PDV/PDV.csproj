@@ -8,6 +8,16 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <None Remove="Images\point-of-sale-system.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Resource Include="Images\point-of-sale-system.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="MaterialDesignExtensions" Version="3.3.0" />
         <PackageReference Include="MaterialDesignThemes" Version="4.2.1" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />

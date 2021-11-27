@@ -42,6 +42,15 @@
                     </StackPanel>
                 </MaterialDesign:Card>
                 <MaterialDesign:Card Grid.Row="1" Grid.RowSpan="3"  Margin="8 16 16 16" UniformCornerRadius="16">
+                    <MaterialDesign:Card.Resources>
+                        <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
+                            <Setter Property="FontSize" Value="22" />
+                        </Style>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignSubtitle2TextBlock}">
+                            
+
+                        </Style>
+                    </MaterialDesign:Card.Resources>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <StackPanel Orientation="Vertical">
                             <Border BorderThickness="1" CornerRadius="16"
@@ -61,7 +70,7 @@
                                        Text="Coca-Cola retornavel edição de natal" Width="150"
                                        Style="{StaticResource MaterialDesignSubtitle2TextBlock}" TextWrapping="Wrap" />
                         </StackPanel>
-                        <StackPanel Margin="16"
+                        <StackPanel Margin="16"                                    
                                     DataContext="{Binding ElementName=listCartItems,Path=SelectedItem}"
                                     d:DataContext="{d:DesignInstance Type={x:Type models:ChartItem}}">
                             <StackPanel Orientation="Horizontal" Margin="0 8 0 0">
@@ -77,7 +86,7 @@
                                                   Focusable="True">
                                 </controls:Numeric>
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" Margin="0 8"> 
                                 <TextBlock Text="Preço Un" Width="100" VerticalAlignment="Bottom" />
                                 <TextBox Text="{Binding Product.Price, Mode=OneWay}" 
                                          IsReadOnly="True" Focusable="False"
@@ -86,7 +95,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Preço Total" 
                                            Width="100" VerticalAlignment="Bottom" />
-                                <TextBox Text="{Binding Total, Mode=OneWay}" 
+                                <TextBox Text="{Binding Total, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" Foreground="{DynamicResource PrimaryHueMidBrush}" 
                                          IsReadOnly="True" Focusable="False"
                                          Width="100" TextAlignment="Right" />
                             </StackPanel>

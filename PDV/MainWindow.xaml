@@ -17,7 +17,7 @@
                     Background="{DynamicResource MaterialDesignPaper}"                    
                     FadeContentIfInactive="False"                    
                     WindowStartupLocation="CenterScreen"
-                    MinHeight="600" MinWidth="800">
+                    MinHeight="700" MinWidth="1200">
     <Window.Resources>
         <ControlTemplate x:Key="FrameTemplate" TargetType="Frame">
             <DockPanel Margin="7">

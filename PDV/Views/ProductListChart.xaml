@@ -12,113 +12,135 @@
              FocusManager.FocusedElement="{Binding ElementName=SearchTermTxb}"
              d:DataContext="{d:DesignInstance Type={x:Type vm:ProductListCart}}">
     <Grid>
-        <Grid.ColumnDefinitions>            
-            <ColumnDefinition Width="1.4*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <MaterialDesign:Card Margin="8 16 16 16" UniformCornerRadius="16">
-            <StackPanel HorizontalAlignment="Left"
-                        Margin="16">
-                <TextBlock Text="PDV"
-                       Margin="0 0 0 16"
-                       Style="{StaticResource MaterialDesignHeadline6TextBlock}" />
-                <TextBox MaterialDesign:HintAssist.Hint="Pesquise por descrição ou código"
-                     Name="SearchTermTxb"                     
-                     MaterialDesign:HintAssist.IsFloating="False"
-                     Width="400" TabIndex="1"
-                     Style="{StaticResource MaterialDesignOutlinedTextBox}" />
-            </StackPanel>
-        </MaterialDesign:Card>
-        <MaterialDesign:Card Grid.Row="1" Grid.RowSpan="3"  Margin="8 16 16 16" UniformCornerRadius="16">
-            <StackPanel Orientation="Horizontal">
-                <StackPanel Orientation="Vertical">
-                    <Image>
-                        <Image.Source>
-                            <DrawingImage>
-                                <DrawingImage.Drawing>
-                                    <GeometryDrawing Brush="#FFF1A603"
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.4*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <MaterialDesign:Card Margin="8 16 16 16" 
+                                     UniformCornerRadius="16"
+                                     Grid.Row="0">
+                    <StackPanel HorizontalAlignment="Left"
+                                Margin="16">
+                        <TextBlock Text="PDV"
+                                   Margin="0 0 0 16"
+                                   Style="{StaticResource MaterialDesignHeadline6TextBlock}" />
+                        <TextBox MaterialDesign:HintAssist.Hint="Pesquise por descrição ou código"
+                                 Name="SearchTermTxb"
+                                 MaterialDesign:HintAssist.IsFloating="False"
+                                 Width="400" TabIndex="1"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}" />
+                    </StackPanel>
+                </MaterialDesign:Card>
+                <MaterialDesign:Card Grid.Row="1" Grid.RowSpan="3"  Margin="8 16 16 16" UniformCornerRadius="16">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <StackPanel Orientation="Vertical">
+                            <Border BorderThickness="1" CornerRadius="16"
+                                    Background="{DynamicResource MaterialDesignPaper}">
+                                <Image Height="200" Width="400">
+                                    <Image.Source>
+                                        <DrawingImage>
+                                            <DrawingImage.Drawing>
+                                                <GeometryDrawing Brush="#FFF1A603"
                                                  Geometry="F1M1737.61,7339.85C1720.49,7342.44 1709.83,7334.36 1709.83,7334.36  1701.44,7341.47 1682.84,7340.17 1682.84,7340.17 1682.66,7388.31 1709.83,7397.03 1709.83,7397.03 1741.17,7386.37 1737.61,7339.85 1737.61,7339.85 M1709.54,7386.88C1707.5,7386.88 1705.85,7385.23 1705.85,7383.18 1705.85,7381.14 1707.5,7379.49 1709.54,7379.49 1711.58,7379.49 1713.23,7381.14 1713.23,7383.18 1713.23,7385.23 1711.58,7386.88 1709.54,7386.88 M1712.37,7367.58C1712.37,7367.58 1712.28,7370.72 1710.94,7372.06 1710.94,7372.06 1709.33,7373.48 1707.54,7371.61 1707.54,7371.61 1707.09,7370.31 1706.47,7366.75L1705.48,7352.56 1705.48,7348.72C1705.48,7348.72 1705.59,7345.14 1709.61,7344.51 1709.61,7344.51 1713.36,7344.34 1713.53,7348.27 1713.53,7348.27 1713.98,7352.56 1712.37,7367.58" />
-                                </DrawingImage.Drawing>
-                            </DrawingImage>
-                        </Image.Source>
-                    </Image>
-                    <TextBlock VerticalAlignment="Center" Margin="8 0 0 0"
-                           Text="Coca-Cola retornavel edição de natal" Width="150"
-                           Style="{StaticResource MaterialDesignSubtitle2TextBlock}" TextWrapping="Wrap" />
-                </StackPanel>
-                <StackPanel Margin="16"
-                        DataContext="{Binding ElementName=listCartItems,Path=SelectedItem}"
-                        d:DataContext="{d:DesignInstance Type={x:Type models:ChartItem}}">
-                    <StackPanel Orientation="Horizontal" Margin="0 8 0 0">
-                        <TextBlock Text="Código" Width="100" VerticalAlignment="Bottom" />
-                        <TextBlock Text="{Binding Product.Id}" Width="100" TextAlignment="Right" />
+                                            </DrawingImage.Drawing>
+                                        </DrawingImage>
+                                    </Image.Source>
+                                </Image>
+                            </Border>
+                            <TextBlock VerticalAlignment="Center" Margin="8 0 0 0"
+                                       Text="Coca-Cola retornavel edição de natal" Width="150"
+                                       Style="{StaticResource MaterialDesignSubtitle2TextBlock}" TextWrapping="Wrap" />
+                        </StackPanel>
+                        <StackPanel Margin="16"
+                                    DataContext="{Binding ElementName=listCartItems,Path=SelectedItem}"
+                                    d:DataContext="{d:DesignInstance Type={x:Type models:ChartItem}}">
+                            <StackPanel Orientation="Horizontal" Margin="0 8 0 0">
+                                <TextBlock Text="Código" Width="100" VerticalAlignment="Bottom" />
+                                <TextBlock Text="{Binding Product.Id}" Width="100" TextAlignment="Right" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0 8 0 0">
+                                <TextBlock Text="Quantidade" Width="100" VerticalAlignment="Bottom" />
+                                <controls:Numeric Value="{Binding Count,Mode=TwoWay}" 
+                                                  Width="100" 
+                                                  MinValue="1" 
+                                                  TextAlignment="Right" TabIndex="1"
+                                                  Focusable="True">
+                                </controls:Numeric>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Preço Un" Width="100" VerticalAlignment="Bottom" />
+                                <TextBox Text="{Binding Product.Price, Mode=OneWay}" 
+                                         IsReadOnly="True" Focusable="False"
+                                         Width="100" TextAlignment="Right" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Preço Total" 
+                                           Width="100" VerticalAlignment="Bottom" />
+                                <TextBox Text="{Binding Total, Mode=OneWay}" 
+                                         IsReadOnly="True" Focusable="False"
+                                         Width="100" TextAlignment="Right" />
+                            </StackPanel>
+                        </StackPanel>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0 8 0 0">
-                        <TextBlock Text="Quantidade" Width="100" VerticalAlignment="Bottom" />
-                        <controls:Numeric Value="{Binding Count,Mode=TwoWay}" 
-                                  Width="100" 
-                                  MinValue="1" 
-                                  TextAlignment="Right" TabIndex="1"
-                                  Focusable="True">
-                        </controls:Numeric>
+                </MaterialDesign:Card>
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <MaterialDesign:Card Margin="16" UniformCornerRadius="16" 
+                                     Grid.Column="1">
+                    <ListView x:Name="listCartItems" Margin="16"
+                              ItemsSource="{Binding CartItems}"
+                              SelectedIndex="0">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid d:DataContext="{x:Type models:ChartItem}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="300"/>
+                                        <ColumnDefinition Width="100"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Product.Name}"></TextBlock>
+                                    <TextBlock Grid.Column="1" Text="{Binding Total}"></TextBlock>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+
+                </MaterialDesign:Card>
+
+                <MaterialDesign:Card Margin="16 16 16 16" UniformCornerRadius="16" 
+                                     Grid.Row="1">
+                    <StackPanel Margin="16">
+                        <TextBlock Text="Total da venda" Style="{StaticResource MaterialDesignSubtitle2TextBlock}"/>
+                        <TextBlock Text="{Binding Total,StringFormat='C'}" Style="{StaticResource MaterialDesignHeadline3TextBlock}" />
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Preço Un" Width="100" VerticalAlignment="Bottom" />
-                        <TextBox Text="{Binding Product.Price, Mode=OneWay}" 
-                         IsReadOnly="True" Focusable="False"
-                         Width="100" TextAlignment="Right" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Preço Total" 
-                           Width="100" VerticalAlignment="Bottom" />
-                        <TextBox Text="{Binding Total, Mode=OneWay}" 
-                         IsReadOnly="True" Focusable="False"
-                         Width="100" TextAlignment="Right" />
-                    </StackPanel>
-                </StackPanel>
-            </StackPanel>
-        </MaterialDesign:Card>
-        <MaterialDesign:Card Margin="16" UniformCornerRadius="16" Grid.Column="1" Grid.RowSpan="3" >
-            <ListView x:Name="listCartItems" 
-                      Margin="16"
-                  ItemsSource="{Binding CartItems}"
-                  SelectedIndex="0">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid d:DataContext="{x:Type models:ChartItem}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="300"/>
-                                <ColumnDefinition Width="100"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Product.Name}"></TextBlock>
-                            <TextBlock Grid.Column="1" Text="{Binding Total}"></TextBlock>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </MaterialDesign:Card>
-        <MaterialDesign:Card Margin="16 16 16 16" UniformCornerRadius="16" 
-                             Grid.Row="3" Grid.Column="2">
-            <StackPanel Margin="16">
-                <TextBlock Text="Total da venda" Style="{StaticResource MaterialDesignSubtitle2TextBlock}"/>
-                <TextBlock Text="{Binding Total,StringFormat='C'}" Style="{StaticResource MaterialDesignHeadline3TextBlock}" />
-            </StackPanel>
-        </MaterialDesign:Card>            
-        
-        <StackPanel Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left">
-            <Button TabIndex="2" Height="80"  Width="180">
-                <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}">
-                    FINALIZAR VENDA<LineBreak/>
+                </MaterialDesign:Card>
+            </Grid>
+
+            <StackPanel Grid.Row="1" HorizontalAlignment="Left" Margin="8">
+                <Button TabIndex="2" Height="80"  Width="180"
+                        MaterialDesign:ButtonAssist.CornerRadius="16">
+                    <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}">
+                    FINALIZAR<LineBreak/>
                     <Run FontSize="12">(crtl+enter)</Run>
-                </TextBlock>
+                    </TextBlock>
                 </Button>
-        </StackPanel>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

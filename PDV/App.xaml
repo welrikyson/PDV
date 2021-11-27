@@ -8,7 +8,7 @@
     <Application.Resources>        
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="Amber" SecondaryColor="Indigo" >
+                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="Teal" SecondaryColor="Amber" >
                     
                 </materialDesign:BundledTheme>
                 <ResourceDictionary
@@ -27,15 +27,9 @@
             </Style>
 
             <Style TargetType="controls:MainGrid" BasedOn="{StaticResource DefaultMainGridStyle}"/>
-            <CornerRadius x:Key="Radius">16</CornerRadius>
-            <DataTemplate DataType="{x:Type vm:ProductListManager}">
-                <views:ProductListManager />
-            </DataTemplate>
+            <CornerRadius x:Key="Radius">16</CornerRadius>            
             <DataTemplate DataType="{x:Type vm:SaleInfo}">
                 <views:SaleInfo />
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type vm:ProductListCart}">
-                <views:ProductListChart Margin="16" />
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>

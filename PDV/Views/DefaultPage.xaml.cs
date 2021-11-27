@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PDV.Ultis.Moc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,9 +28,9 @@ namespace PDV.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Views.ProductListManager()
+            this.NavigationService.Navigate(new ProductListChart()
             {
-                DataContext = new ViewModels.ProductListManager()
+                DataContext = new ViewModels.ProductListCart(Mock.CartItems)
             });
         }
     }

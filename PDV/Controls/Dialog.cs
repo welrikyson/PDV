@@ -13,6 +13,10 @@ namespace PDV.Controls
 {
     public class Dialog : ContentControl
     {
+        public Dialog()
+        {
+            DialogService  = new DialogService();
+        }
         public IDialogService DialogService
         {
             get { return (IDialogService)GetValue(DialogServiceProperty); }
@@ -21,7 +25,7 @@ namespace PDV.Controls
 
         // Using a DependencyProperty as the backing store for DialogService.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty DialogServiceProperty =
-            DependencyProperty.Register(nameof(DialogService), typeof(IDialogService), typeof(Dialog), new PropertyMetadata(new DialogService(),propertyChangedCallback: DialogServiceChangedHandler));
+            DependencyProperty.Register(nameof(DialogService), typeof(IDialogService), typeof(Dialog), new PropertyMetadata(propertyChangedCallback: DialogServiceChangedHandler));
 
         private static void DialogServiceChangedHandler(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -30,32 +34,36 @@ namespace PDV.Controls
         }
         private void DialogServiceChangedHandler(object newValue)
         {
-            if(newValue is IDialogService dialogService)
-            {                
+            if (newValue is IDialogService dialogService)
+            {
                 dialogService.OpenDialogEvent +=
                                 OnOpenedDialogHandler;
 
                 dialogService.CloseDialogEvent +=
                      OnClosedDialogHandler;
             }
-        }        
-        
+        }
+
 
         private void OnOpenedDialogHandler(object content)
         {
+            
             Content = content;
             IsOpen = true;
-            Focus();
-            
-            if(Parent is Grid grid)
-            {                
+            UpdateLayout();
+
+            if(content is UIElement element)
+            {
+                element.Focus();
+            }
+            if (Parent is Grid grid)
+            {
                 foreach (UIElement item in grid.Children)
                 {
                     if (item.Equals(this)) continue;
                     item.IsEnabled = false;
-                } 
-            } 
-            
+                }
+            }            
         }
 
         private void OnClosedDialogHandler(object content)
@@ -68,21 +76,24 @@ namespace PDV.Controls
                     item.IsEnabled = true;
                 }
             }
-            IsOpen = false;                        
+            IsOpen = false;
         }
 
         static Dialog()
-        {   
+        {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Dialog),
                                                      new FrameworkPropertyMetadata(typeof(Dialog)));
-            
-        }        
+
+        }
 
         protected override void OnGotFocus(RoutedEventArgs e)
         {
             base.OnGotFocus(e);
-            UpdateLayout();
-            MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+            //UpdateLayout();
+            //MoveFocus(new (FocusNavigationDirection.Next));
+            //MoveFocus(new(FocusNavigationDirection.Next));
+            //MoveFocus(new(FocusNavigationDirection.Next));
+            //MoveFocus(new(FocusNavigationDirection.Next));            
         }
         public bool IsOpen
         {
@@ -98,12 +109,12 @@ namespace PDV.Controls
                                         new FrameworkPropertyMetadata(default(bool),
                                                                       FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                                                                       OnIsOpenChanged));
-        
+
         private static void OnIsOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            
+
             var dialog = (Dialog)d;
-            dialog.OnIsOpenChanged();            
+            dialog.OnIsOpenChanged();
         }
 
         //Create a custom routed event by first registering a RoutedEventID
@@ -139,11 +150,11 @@ namespace PDV.Controls
         {
             if (IsOpen)
             {
-                
+
                 RaiseEvent(new(OpenedEvent));
             }
             else
-            {                
+            {
                 RaiseEvent(new(ClosedEvent));
             }
         }

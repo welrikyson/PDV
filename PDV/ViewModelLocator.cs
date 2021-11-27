@@ -10,7 +10,5 @@ namespace PDV
     public class ViewModelLocator
     {
         public IServiceProvider ServiceProvider { get; internal set; }
-        public ViewModels.Main MainViewModel => ServiceProvider.GetService<ViewModels.Main>();
-
     }
 }

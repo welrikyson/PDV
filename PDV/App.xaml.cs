@@ -48,27 +48,7 @@ namespace PDV
         public static IHostBuilder AddViewModels(this IHostBuilder hostBuilder) =>
             hostBuilder.ConfigureServices(services =>
             {
-                services.AddSingleton<ViewModels.Navigator>()
-                        .AddTransient<Commands.Cancel>()
-                        .AddTransient<Commands.ProductListFinalize>()
-                        .AddTransient<ViewModels.ProductListManager>()
-                        .AddTransient<ViewModels.DialogService>()
-                        .AddSingleton(n =>
-                        {
-                            var productListManager = n.GetRequiredService<ViewModels.ProductListManager>();
-                            return new ViewModels.NavegableFactory()
-                            {
-                                SaleInfo = new ViewModels.SaleInfo(productListManager),
-                                ProductListManager = productListManager,
-                            };
-                        })
-                        .AddSingleton((serviceProvider) =>
-                        {
-                            var navigator = serviceProvider.GetService<ViewModels.Navigator>();
-                            var dialogService = serviceProvider.GetService<ViewModels.DialogService>();
-                            return new ViewModels.Main(navigator, dialogService);
-                        });
-
+                services.AddTransient<ViewModels.DialogService>();
             });
     }
 }

@@ -27,18 +27,18 @@
                 <Setter.Value>
                     <ControlTemplate>
                         <Grid>
-                            <Grid Style="{StaticResource GridGlass}" x:Name="Glass" Visibility="{TemplateBinding Visibility}"/>
+                            <Grid Style="{StaticResource GridGlass}" Focusable="False" x:Name="Glass" Visibility="{TemplateBinding Visibility}"/>
                             <materialDesign:Card Focusable="True"
                                                  UniformCornerRadius="16" 
                                                  VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <StackPanel Margin="8 0 8 16">
-                                    <Button IsCancel="True"
+                                    <Button IsCancel="True" Focusable="False"
                                             HorizontalAlignment="Right"
                                             Content="{materialDesign:PackIcon Kind=CloseBold}"
                                             Style="{StaticResource MaterialDesignFlatButton}">
                                     </Button>
                                     <ContentPresenter x:Name="ContentPresenter" 
-                                                      Grid.Row="1" Opacity="1"                                              
+                                                      Grid.Row="1" 
                                                       Content="{TemplateBinding ContentControl.Content}" 
                                                       ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" 
                                                       ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}"/>

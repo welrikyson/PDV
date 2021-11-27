@@ -8,8 +8,6 @@
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:controls="clr-namespace:PDV.Controls" xmlns:mb="http://schemas.microsoft.com/xaml/behaviors" xmlns:local="clr-namespace:PDV.Views"
                     mc:Ignorable="d"                   
                     d:DesignHeight="450" d:DesignWidth="800" 
-                    d:DataContext="{d:DesignInstance Type=vms:Main}"
-                    DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=MainViewModel}"
                     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
                     TextElement.FontWeight="Regular"
                     TextElement.FontSize="13"
@@ -38,10 +36,12 @@
                             Style="{StaticResource MaterialDesignFlatButton}"
                             Command="{x:Static NavigationCommands.BrowseForward}" 
                             IsEnabled="{TemplateBinding CanGoForward}"/>
+                    
                 </Grid>
+                <Separator DockPanel.Dock="Top" Opacity=".62"/>
 
-                <materialDesign:Card UniformCornerRadius="16">
-                    <ContentPresenter Margin="16"/>
+                <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth0" Background="{DynamicResource MaterialDesignPaper}" UniformCornerRadius="16">                    
+                    <ContentPresenter Margin="16" />
                 </materialDesign:Card>
             </DockPanel>
         </ControlTemplate>
@@ -49,12 +49,10 @@
 
 
     <Grid>
-        <controls:MainGrid x:Name="MainGrid" 
-                           SholdConsumeOnKeyMPressed="True" MKeyDown="MainGrid_MKeyDown">
+        <controls:MainGrid SholdConsumeOnKeyMPressed="True" MKeyDown="MainGrid_MKeyDown">
             <Frame x:Name="frame" Template="{StaticResource FrameTemplate}"/>            
         </controls:MainGrid>
 
-        <controls:Dialog x:Name="Dialog" DialogService="{Binding DialogService}" 
-                         Closed="Dialog_Closed" />
+        <controls:Dialog x:Name="Dialog" />
     </Grid>
 </mde:MaterialWindow>

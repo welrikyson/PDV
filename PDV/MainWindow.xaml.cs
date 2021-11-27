@@ -1,4 +1,5 @@
-﻿
+﻿using System.Windows;
+
 
 namespace PDV.Views
 {
@@ -13,22 +14,24 @@ namespace PDV.Views
             frame.Navigate(new DefaultPage());
         }
 
-        private void Dialog_Closed(object sender, System.Windows.RoutedEventArgs e)
+        private void MainGrid_MKeyDown(object sender, RoutedEventArgs e)
         {
-            MainGrid.SetFocus(); 
-        }
+            ViewModels.MenuOptions menuOptions = new ();
 
-        private void MainGrid_MKeyDown(object sender, System.Windows.RoutedEventArgs e)
-        {
-            var menuOptions = new ViewModels.MenuOptions();
-            
-            Dialog.DialogService.ShowDialog(new Views.GereralMenu()
+            GereralMenu viewMenuOptions = new()
             {
                 DataContext = menuOptions
-            });
+            };
+
+            Dialog.DialogService.ShowDialog(viewMenuOptions);
+
             menuOptions.OptionSelected += () =>
             {
                 Dialog.DialogService.CloseDialog();
+                if (frame.Content is UIElement page)
+                {
+                    page.Focus();
+                }
             };
         }
     }

@@ -13,16 +13,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PDV.Views
+namespace PDV.Views.UserControls
 {
     /// <summary>
-    /// Interaction logic for Screensaver.xaml
+    /// Interaction logic for Clock.xaml
     /// </summary>
-    public partial class Screensaver
+    public partial class Clock : UserControl
     {
-        public Screensaver()
+        public Clock()
         {
             InitializeComponent();
+            DataContext = new Components.ViewModels.Clock();
         }
     }
 }

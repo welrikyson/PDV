@@ -2,15 +2,17 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:PDV.Views"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"             
              xmlns:vms="clr-namespace:PDV.ViewModels"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              xmlns:uc="clr-namespace:PDV.Components.UserControls"
-             xmlns:mb="http://schemas.microsoft.com/xaml/behaviors"
+             FocusManager.IsFocusScope="True"
              d:DataContext="{d:DesignInstance Type=vms:MenuOptions, IsDesignTimeCreatable=True}"
-             d:DesignHeight="450" d:DesignWidth="800">    
-    <Grid DataContext="{Binding MenuOption}">
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.InputBindings>
+        <KeyBinding Key="{Binding MenuOption.OptionFindItem.Key}" Command="{Binding MenuOption.OptionFindItem.Selected}"/>
+    </UserControl.InputBindings>
+    <Grid DataContext="{Binding MenuOption}" x:Name="Grid" FocusManager.FocusedElement="{Binding ElementName=first}">        
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
@@ -19,9 +21,10 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <uc:Option DataContext="{Binding OptionFindItem}" 
+        <uc:Option DataContext="{Binding OptionFindItem}"
+                   x:Name="first"
                    Grid.Column="0" Grid.Row="0"/>
-        <uc:Option DataContext="{Binding OptionEnd}" 
+        <uc:Option DataContext="{Binding OptionEnd}"                   
                    Grid.Column="1" Grid.Row="0"/>
         <uc:Option DataContext="{Binding OptionClose}" 
                    Grid.Column="0" Grid.Row="1"/>

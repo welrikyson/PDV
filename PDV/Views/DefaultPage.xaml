@@ -3,19 +3,29 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:PDV.Views"
+      xmlns:controls="clr-namespace:PDV.Views.UserControls"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      FocusManager.IsFocusScope="True"
+      FocusManager.FocusedElement="{Binding ElementName=StarSale}"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DefaultPage">
-
-    <Grid>
-        <Image Opacity=".62" Source="pack://application:,,,/Images/point-of-sale-system.png" Stretch="Fill" Margin="-16"/>
-        <Grid>            
-            <TextBlock Text="Caixa Aberto" 
-                       VerticalAlignment="Top"
-                       Style="{StaticResource MaterialDesignHeadline1TextBlock}"/>
-            <Button FontSize="36" Width="360" Height="80"
-                    VerticalAlignment="Center" Click="Button_Click">Iniciar Venda</Button>
+    <materialDesign:TransitioningContent x:Name="TrainsitionigContentSlide" 
+                                         OpeningEffect="{materialDesign:TransitionEffect Kind=FadeIn, Duration=0:0:0.3}">
+        <Grid>
+            <Image Opacity=".9" 
+               Source="pack://application:,,,/Images/point-of-sale-system.png" 
+               Stretch="UniformToFill" Margin="-16"/>
+            <StackPanel TextBlock.Foreground="{DynamicResource PrimaryHueMidBrush}">
+                <TextBlock Text="Caixa Aberto"
+                           FontWeight="Bold"                           
+                           Style="{StaticResource MaterialDesignHeadline1TextBlock}"/>
+                <controls:Clock/>
+            </StackPanel>
+            <Button x:Name="StarSale" Style="{StaticResource MaterialDesignRaisedButton}" 
+                    Height="80" Width="360" FontSize="30"
+                    Click="Button_Click"
+                    materialDesign:ButtonAssist.CornerRadius="16">Iniciar Venda</Button>
         </Grid>
-    </Grid>
+    </materialDesign:TransitioningContent>
 </Page>

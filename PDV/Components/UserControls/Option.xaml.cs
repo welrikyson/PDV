@@ -22,7 +22,16 @@ namespace PDV.Components.UserControls
     {
         public Option()
         {
-            InitializeComponent();
+            InitializeComponent();            
+        }
+
+        protected override void OnGotFocus(RoutedEventArgs e)
+        {
+            base.OnGotFocus(e);
+            if (e.OriginalSource is Option opt)
+            {
+                opt.btn.Focus();
+            }
         }
     }
 }

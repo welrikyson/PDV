@@ -13,7 +13,7 @@
                        Margin="0 0 0 16"
                        Style="{StaticResource MaterialDesignHeadline6TextBlock}" />
             <TextBox x:Name="AnyTextBox" Width="200" />
-            <Button Content="Emitir cupom fiscal" Click="Button_Click"/>
+            <Button Content="Emitir cupom fiscal"/>
 
         </StackPanel>
     </Grid>

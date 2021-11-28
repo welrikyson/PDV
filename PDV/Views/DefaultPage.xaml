@@ -10,7 +10,7 @@
     <materialDesign:TransitioningContent x:Name="TrainsitionigContentSlide"
                                          OpeningEffect="{materialDesign:TransitionEffect Kind=FadeIn, Duration=0:0:0.5}">
         <Grid>
-            <Image Opacity="1c" 
+            <Image Opacity="1" 
                    Source="pack://application:,,,/Images/point-of-sale-system.png" 
                    Stretch="UniformToFill" Margin="-16"/>
             <StackPanel TextBlock.Foreground="{DynamicResource PrimaryHueMidBrush}">

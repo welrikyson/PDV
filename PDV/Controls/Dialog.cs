@@ -1,13 +1,7 @@
 ﻿using PDV.Interfaces;
 using PDV.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace PDV.Controls
 {
@@ -15,7 +9,7 @@ namespace PDV.Controls
     {
         public Dialog()
         {
-            DialogService  = new DialogService();
+            DialogService = new DialogService();
         }
         public IDialogService DialogService
         {
@@ -47,12 +41,12 @@ namespace PDV.Controls
 
         private void OnOpenedDialogHandler(object content)
         {
-            
+
             Content = content;
             IsOpen = true;
             UpdateLayout();
 
-            if(content is UIElement element)
+            if (content is UIElement element)
             {
                 element.Focus();
             }
@@ -63,7 +57,7 @@ namespace PDV.Controls
                     if (item.Equals(this)) continue;
                     item.IsEnabled = false;
                 }
-            }            
+            }
         }
 
         private void OnClosedDialogHandler(object content)

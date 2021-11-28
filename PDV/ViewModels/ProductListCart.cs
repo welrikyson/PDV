@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 using PDV.Interfaces;
 using PDV.Models;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace PDV.ViewModels
 {

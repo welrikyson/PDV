@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+using System;
 using System.Timers;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
 
 namespace PDV.Components.ViewModels
 {
@@ -20,7 +20,7 @@ namespace PDV.Components.ViewModels
         {
             get => _currentTime;
             private set
-            {                
+            {
                 SetProperty(ref _currentTime, value);
             }
         }

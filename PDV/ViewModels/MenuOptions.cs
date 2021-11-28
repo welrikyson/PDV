@@ -1,9 +1,5 @@
 ﻿using Microsoft.Toolkit.Mvvm.Input;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace PDV.ViewModels
@@ -13,7 +9,7 @@ namespace PDV.ViewModels
         public string Title { get; set; } = "Menu geral";
         public MenuOptionItem MenuOptionSelected { get; set; }
         public ICommand ConfirmSelection { get; set; }
-        public MenuOption MenuOption { get; set; }        
+        public MenuOption MenuOption { get; set; }
 
         public MenuOptions()
         {
@@ -22,13 +18,13 @@ namespace PDV.ViewModels
             MenuOption = new MenuOption(optionFindItem: new MenuOptionItem(Key.D2, "FindItem", OnOptionSectedHandler),
                                         optionClose: new MenuOptionItem(Key.D3, "FindItem", OnOptionSectedHandler),
                                         optionEnd: new MenuOptionItem(Key.D4, "FindItem", OnOptionSectedHandler));
-            
+
 
             MenuOptionSelected = MenuOption.OptionFindItem;
 
         }
 
-        
+
         private void OnOptionSectedHandler(MenuOptionItem obj)
         {
             MenuOptionSelected = obj;
@@ -70,9 +66,9 @@ namespace PDV.ViewModels
             OnOptionSelected?.Invoke(this);
         }
 
-        public event Action<MenuOptionItem>?  OnOptionSelected;
+        public event Action<MenuOptionItem>? OnOptionSelected;
 
-    }        
+    }
 
     public class MenuOption
     {

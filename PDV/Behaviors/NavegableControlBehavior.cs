@@ -1,5 +1,5 @@
-﻿using System.Windows;
-using PDV.Interfaces;
+﻿using PDV.Interfaces;
+using System.Windows;
 
 namespace PDV.Behaviors
 {

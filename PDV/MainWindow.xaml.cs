@@ -19,7 +19,7 @@ namespace PDV.Views
 
         private void MainGrid_MKeyDown(object sender, RoutedEventArgs e)
         {
-            ViewModels.MenuOptions menuOptions = new ();
+            ViewModels.MenuOptions menuOptions = new();
 
             GereralMenu viewMenuOptions = new()
             {

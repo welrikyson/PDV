@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PDV.Views;
-using System;
 using System.Windows;
 
 namespace PDV
@@ -22,7 +21,7 @@ namespace PDV
             Host.CreateDefaultBuilder()
                 .AddViewModels()
                 .ConfigureServices((hostContext, services) =>
-                {                    
+                {
                     services.AddSingleton<MainWindow>();
                 });
 
@@ -31,7 +30,7 @@ namespace PDV
             base.OnStartup(e);
             _host.Start();
 
-            var serviceProvider = _host.Services;            
+            var serviceProvider = _host.Services;
 
             serviceProvider.GetRequiredService<MainWindow>().Show();
         }
@@ -41,7 +40,7 @@ namespace PDV
         public static IHostBuilder AddViewModels(this IHostBuilder hostBuilder) =>
             hostBuilder.ConfigureServices(services =>
             {
-                
+
             });
     }
 }

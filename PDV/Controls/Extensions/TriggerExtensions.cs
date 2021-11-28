@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Animation;
 
 namespace PDV.Controls.Extensions
 {
     public static class TriggerExtensions
-     
+
     {
         public static void CreateNewBooleanTrigger(this DependencyObject target,
                                                    bool receviesValue,

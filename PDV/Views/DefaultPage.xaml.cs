@@ -28,14 +28,8 @@ namespace PDV.Views
         private void ShowLockScreen()
         {
             Visibility = Visibility.Visible;
-            parentWindow.PreviewKeyDown += KeyDownHandler;
-            parentWindow.PreviewMouseMove += PreviewMouseMoveHandler;            
-        }
-
-        private void PreviewMouseMoveHandler(object sender, MouseEventArgs e)
-        {   
-            HiddenAndDisableEventAnddRestartDetector();
-        }
+            parentWindow.PreviewKeyDown += KeyDownHandler;            
+        }        
 
         private void KeyDownHandler(object sender, KeyEventArgs e)
         {
@@ -45,8 +39,7 @@ namespace PDV.Views
         private void HiddenAndDisableEventAnddRestartDetector()
         {
             Visibility = Visibility.Hidden;
-            parentWindow.PreviewKeyDown -= KeyDownHandler;
-            parentWindow.PreviewMouseMove -= PreviewMouseMoveHandler;
+            parentWindow.PreviewKeyDown -= KeyDownHandler;         
             inactivityDetector.Start();
         }
     }

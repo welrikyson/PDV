@@ -4,16 +4,13 @@
               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
               xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
               xmlns:controls="clr-namespace:PDV.Views.UserControls"
-              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
-              xmlns:sys="clr-namespace:System;assembly=System.Runtime"              
-              FocusManager.IsFocusScope="True"              
-              FocusManager.FocusedElement="{Binding ElementName=StarSale}"
+              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"              
               mc:Ignorable="d"               
               d:DesignHeight="450" d:DesignWidth="800">
-    <materialDesign:TransitioningContent x:Name="TrainsitionigContentSlide" 
-                                         OpeningEffect="{materialDesign:TransitionEffect Kind=FadeIn, Duration=0:0:0.3}">
+    <materialDesign:TransitioningContent x:Name="TrainsitionigContentSlide"
+                                         OpeningEffect="{materialDesign:TransitionEffect Kind=FadeIn, Duration=0:0:0.5}">
         <Grid>
-            <Image Opacity=".9" 
+            <Image Opacity="1c" 
                    Source="pack://application:,,,/Images/point-of-sale-system.png" 
                    Stretch="UniformToFill" Margin="-16"/>
             <StackPanel TextBlock.Foreground="{DynamicResource PrimaryHueMidBrush}">
@@ -21,10 +18,7 @@
                            FontWeight="Bold"                           
                            Style="{StaticResource MaterialDesignHeadline1TextBlock}"/>
                 <controls:Clock/>
-            </StackPanel>
-            <Button x:Name="StarSale" Style="{StaticResource MaterialDesignRaisedButton}" 
-                    Height="80" Width="360" FontSize="30"                    
-                    materialDesign:ButtonAssist.CornerRadius="16">Iniciar Venda</Button>
+            </StackPanel>            
         </Grid>
     </materialDesign:TransitioningContent>
 </UserControl>

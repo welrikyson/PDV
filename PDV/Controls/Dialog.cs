@@ -1,7 +1,9 @@
 ﻿using PDV.Interfaces;
 using PDV.ViewModels;
+using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace PDV.Controls
 {
@@ -10,7 +12,14 @@ namespace PDV.Controls
         public Dialog()
         {
             DialogService = new DialogService();
+            CommandBindings.Add(new CommandBinding(DialogCommands.Close,OnExecutedCloseCommand));
         }
+
+        private void OnExecutedCloseCommand(object sender, ExecutedRoutedEventArgs e)
+        {
+            OnCloseDialog();
+        }
+
         public IDialogService DialogService
         {
             get { return (IDialogService)GetValue(DialogServiceProperty); }
@@ -62,6 +71,11 @@ namespace PDV.Controls
 
         private void OnClosedDialogHandler(object content)
         {
+            OnCloseDialog();
+        }
+
+        private void OnCloseDialog()
+        {
             if (Parent is Grid grid)
             {
                 foreach (UIElement item in grid.Children)
@@ -79,16 +93,7 @@ namespace PDV.Controls
                                                      new FrameworkPropertyMetadata(typeof(Dialog)));
 
         }
-
-        protected override void OnGotFocus(RoutedEventArgs e)
-        {
-            base.OnGotFocus(e);
-            //UpdateLayout();
-            //MoveFocus(new (FocusNavigationDirection.Next));
-            //MoveFocus(new(FocusNavigationDirection.Next));
-            //MoveFocus(new(FocusNavigationDirection.Next));
-            //MoveFocus(new(FocusNavigationDirection.Next));            
-        }
+        
         public bool IsOpen
         {
             get { return (bool)GetValue(IsOpenProperty); }

@@ -15,6 +15,7 @@ namespace PDV.Views
     public partial class DefaultPage
     {
         InactivityDetector inactivityDetector = new(TimeSpan.FromSeconds(4));
+        private Point _inactiveMousePosition;
         private Window parentWindow;
 
         public DefaultPage()
@@ -22,14 +23,36 @@ namespace PDV.Views
             InitializeComponent();
             inactivityDetector.DetectedInactivity += () =>
                  Dispatcher.Invoke(ShowLockScreen);
-            parentWindow = Application.Current.MainWindow;
+            _inactiveMousePosition = Mouse.GetPosition(Application.Current.MainWindow);
+            parentWindow = Application.Current.MainWindow;            
+        }
+
+        private void OnActivity(object sender, PreProcessInputEventArgs e)
+        {
+            InputEventArgs inputEventArgs = e.StagingItem.Input;
+            if (inputEventArgs is MouseEventArgs mea)
+            {
+                // no button is pressed and the position is still the same as the application became inactive
+                if (mea.LeftButton == MouseButtonState.Released &&
+                    mea.RightButton == MouseButtonState.Released &&
+                    mea.MiddleButton == MouseButtonState.Released &&
+                    mea.XButton1 == MouseButtonState.Released &&
+                    mea.XButton2 == MouseButtonState.Released &&
+                    _inactiveMousePosition == mea.GetPosition(Application.Current.MainWindow))
+                {
+                    Debug.WriteLine("mouseMove\n");
+                    return;
+                }
+                HiddenAndDisableEventAnddRestartDetector();
+            }
         }
 
         private void ShowLockScreen()
         {
             Visibility = Visibility.Visible;
-            parentWindow.PreviewKeyDown += KeyDownHandler;            
-        }        
+            parentWindow.PreviewKeyDown += KeyDownHandler;
+            InputManager.Current.PreProcessInput += OnActivity;
+        }
 
         private void KeyDownHandler(object sender, KeyEventArgs e)
         {
@@ -39,8 +62,10 @@ namespace PDV.Views
         private void HiddenAndDisableEventAnddRestartDetector()
         {
             Visibility = Visibility.Hidden;
-            parentWindow.PreviewKeyDown -= KeyDownHandler;         
+            parentWindow.PreviewKeyDown -= KeyDownHandler;
+            InputManager.Current.PreProcessInput -= OnActivity;
             inactivityDetector.Start();
+            _inactiveMousePosition = Mouse.GetPosition(Application.Current.MainWindow);
         }
     }
 

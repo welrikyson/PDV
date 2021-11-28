@@ -21,8 +21,7 @@ namespace PDV.Views
             frame.Navigate(new ProductListChart()
             {
                 DataContext = new ViewModels.ProductListCart(Mock.CartItems)
-            });           
-            
+            });
         }        
 
         private void MainGrid_MKeyDown(object sender, RoutedEventArgs e)
@@ -35,7 +34,13 @@ namespace PDV.Views
             };
 
             Dialog.DialogService.ShowDialog(viewMenuOptions);
-
+            Dialog.Closed += (s,e) =>
+            {
+                if (frame.Content is UIElement page)
+                {
+                    page.Focus();
+                }
+            };
             menuOptions.OptionSelected += () =>
             {
                 Dialog.DialogService.CloseDialog();

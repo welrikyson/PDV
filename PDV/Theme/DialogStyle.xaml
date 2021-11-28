@@ -1,6 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:PDV.Controls" xmlns:sys="clr-namespace:System;assembly=System.Runtime" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+                    xmlns:controls="clr-namespace:PDV.Controls" 
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime" 
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <Style x:Key="GridGlass" TargetType="Grid">
         <Setter Property="Visibility" Value="Hidden" />
         <Setter Property="Background">
@@ -35,8 +37,8 @@
                                     <Button IsCancel="True" Focusable="False"
                                             HorizontalAlignment="Right"
                                             Content="{materialDesign:PackIcon Kind=CloseBold}"
-                                            Style="{StaticResource MaterialDesignFlatButton}">
-                                    </Button>
+                                            Style="{StaticResource MaterialDesignFlatButton}"
+                                            Command="{x:Static controls:DialogCommands.Close}"/>
                                     <ContentPresenter x:Name="ContentPresenter" 
                                                       Grid.Row="1" 
                                                       Content="{TemplateBinding ContentControl.Content}" 

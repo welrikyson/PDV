@@ -18,12 +18,40 @@ namespace PDV.Behaviors
         private InactivityDetector? _inactivityDetector;
         private Point _inactiveMousePosition;
 
+
+
+        public bool IsEnable
+        {
+            get { return (bool)GetValue(IsEnableProperty); }
+            set { SetValue(IsEnableProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsEnable.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsEnableProperty =
+            DependencyProperty.Register("IsEnable", typeof(bool), typeof(ShowOnInactivityDetectedBehavior), new PropertyMetadata(true, OnIsEnableChanged));
+
+        private static void OnIsEnableChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+
+
+            if (d is ShowOnInactivityDetectedBehavior inactivityDetectedBehavior)
+            {
+
+                if (e.NewValue.Equals(false))
+                    inactivityDetectedBehavior._inactivityDetector?.StopTimer();
+                else if (e.NewValue.Equals(true))
+                    inactivityDetectedBehavior._inactivityDetector?.Start();
+            }
+
+
+        }
+
         public TimeSpan InativityTime { get; set; }
 
         public FrameworkElement Content { get; set; } = new Grid();
         protected override void OnAttached()
         {
-            var index = AssociatedObject.Children.Count +1;
+            var index = AssociatedObject.Children.Count + 1;
             Content.Visibility = Visibility.Hidden;
             Panel.SetZIndex(Content, index);
             AssociatedObject.Children.Add(Content);
@@ -34,7 +62,7 @@ namespace PDV.Behaviors
 
         private void ShowElement()
         {
-            Content.Visibility = Visibility.Visible;            
+            Content.Visibility = Visibility.Visible;
             _inactiveMousePosition = Mouse.GetPosition(Application.Current.MainWindow);
             InputManager.Current.PreProcessInput += OnActivity;
         }
@@ -115,7 +143,7 @@ namespace PDV.Behaviors
             return (Environment.TickCount - info.dwTime) / 1000;
         }
 
-        private void StopTimer()
+        public void StopTimer()
         {
             _timer.Stop();
         }

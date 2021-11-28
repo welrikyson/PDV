@@ -13,8 +13,6 @@ namespace PDV.Models
             Name = name;
             Price = price;
         }
-
-
     }
 
     public class ChartItem : ObservableObject
@@ -59,7 +57,7 @@ namespace PDV.Models
         }
 
         public decimal Total { get; private set; }
-        public event TotalChange TotalChange;
+        public event TotalChange? TotalChange;
     }
 
     public delegate void TotalChange(decimal oldValue, decimal newValue);

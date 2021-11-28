@@ -13,7 +13,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />-->
 
                 <!-- Material Design -->
-                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="Teal" SecondaryColor="Amber"/>
+                <materialDesign:CustomColorTheme BaseTheme="Dark"  PrimaryColor="#1affff" SecondaryColor="#36eee0"/>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
 
                 <!-- Material Design: MahApps Compatibility -->

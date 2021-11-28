@@ -61,8 +61,7 @@
                                     ID: <Run FontWeight="DemiBold" Text="{Binding Product.Id}"></Run>
                                 </TextBlock>
                             </StackPanel>
-                            <Border BorderThickness="1" CornerRadius="16"
-                                    Background="{DynamicResource MaterialDesignPaper}">
+                            <Border BorderThickness="1" CornerRadius="16">
                                 <Image Height="200" Width="400" Source="pack://application:,,,/Images/item.jpg" />
                             </Border>
                             <TextBlock VerticalAlignment="Center" Margin="8 0 0 0"

@@ -25,8 +25,12 @@
                 <ResourceDictionary Source="pack://application:,,,/PDV;component/Theme/DialogStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/PDV;component/Theme/NumericUpDown.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/PDV;component/Theme/FrameStyle.xaml"/>
-            
+               
+
             </ResourceDictionary.MergedDictionaries>
+            <ControlTemplate x:Key="MainGridTemplate"  TargetType="controls:MainGrid">
+                <ContentPresenter />
+            </ControlTemplate>
 
             <!-- MahApps Brushes -->
             <SolidColorBrush x:Key="HighlightBrush" Color="{DynamicResource Primary700}"/>

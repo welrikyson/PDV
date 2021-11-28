@@ -19,12 +19,7 @@
                     Background="{DynamicResource MaterialDesignPaper}"                    
                     FadeContentIfInactive="False"                    
                     WindowStartupLocation="CenterScreen"
-                    MinHeight="700" MinWidth="1200">    
-    <Window.Resources>
-        <ControlTemplate x:Key="MainGridTemplate"  TargetType="controls:MainGrid">
-            <ContentPresenter />
-        </ControlTemplate>
-    </Window.Resources>
+                    MinHeight="700" MinWidth="1200"> 
     <Grid>
         <i:Interaction.Behaviors>
             <behavior:ShowOnInactivityDetectedBehavior InativityTime="00:00:10">

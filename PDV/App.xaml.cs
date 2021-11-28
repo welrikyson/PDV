@@ -18,27 +18,20 @@ namespace PDV
             _host = hostbuilder.Build();
         }
 
-
         private static IHostBuilder ConfigureHostBuilder() =>
             Host.CreateDefaultBuilder()
                 .AddViewModels()
                 .ConfigureServices((hostContext, services) =>
-                {
-                    services.AddSingleton<ViewModelLocator>();
+                {                    
                     services.AddSingleton<MainWindow>();
                 });
-
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
             _host.Start();
 
-            var serviceProvider = _host.Services;
-            if (Resources["ViewModelLocator"] is ViewModelLocator viewModelLocator)
-            {
-                viewModelLocator.ServiceProvider = serviceProvider;
-            }
+            var serviceProvider = _host.Services;            
 
             serviceProvider.GetRequiredService<MainWindow>().Show();
         }
@@ -48,7 +41,7 @@ namespace PDV
         public static IHostBuilder AddViewModels(this IHostBuilder hostBuilder) =>
             hostBuilder.ConfigureServices(services =>
             {
-                services.AddTransient<ViewModels.DialogService>();
+                
             });
     }
 }

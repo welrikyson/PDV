@@ -10,8 +10,11 @@ namespace PDV.Views
     {
         public MainWindow()
         {
-            InitializeComponent();             
-            frame.Navigate(new DefaultPage());
+            InitializeComponent();
+            frame.Navigate(new DefaultPage()
+            {
+                RemoveFromJournal = false
+            });
         }
 
         private void MainGrid_MKeyDown(object sender, RoutedEventArgs e)

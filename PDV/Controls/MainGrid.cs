@@ -63,7 +63,7 @@ namespace PDV.Controls
             RoutedEventArgs args = new RoutedEventArgs(MKeyDownEvent);
             RaiseEvent(args);
         }
-        public bool SholdConsumeOnKeyMPressed { get; set; }
+        public bool SholdConsumeOnKeyMPressed { get; set; } = true;
         // Here KeyDown attached event is customized for the desired key
         protected override void OnKeyDown(KeyEventArgs e)
         {

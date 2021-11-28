@@ -19,16 +19,16 @@ namespace PDV.Views
     /// <summary>
     /// Interaction logic for DefaultPage.xaml
     /// </summary>
-    public partial class DefaultPage : Page
-    {
+    public partial class DefaultPage
+    {        
         public DefaultPage()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new ProductListChart()
+            NavigationService.Navigate(new ProductListChart()
             {
                 DataContext = new ViewModels.ProductListCart(Mock.CartItems)
             });

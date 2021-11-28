@@ -45,11 +45,13 @@
                 </materialDesign:Card>
             </DockPanel>
         </ControlTemplate>
+        <ControlTemplate x:Key="MainGridTemplate"  TargetType="controls:MainGrid">
+            <ContentPresenter />
+        </ControlTemplate>
     </Window.Resources>
-
-
     <Grid>
-        <controls:MainGrid SholdConsumeOnKeyMPressed="True" MKeyDown="MainGrid_MKeyDown">
+        <controls:MainGrid Template="{StaticResource MainGridTemplate}"
+                           MKeyDown="MainGrid_MKeyDown">
             <Frame x:Name="frame" Template="{StaticResource FrameTemplate}"/>            
         </controls:MainGrid>
 

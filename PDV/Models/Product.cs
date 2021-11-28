@@ -51,8 +51,8 @@ namespace PDV.Models
 
                 _count = value;
                 SetTotal(CalculeteTotal(_count));
-                this.OnPropertyChanging(nameof(Count));
-                this.OnPropertyChanging(nameof(Total));
+                this.OnPropertyChanged(nameof(Count));
+                this.OnPropertyChanged(nameof(Total));
             }
         }
 

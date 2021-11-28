@@ -9,5 +9,14 @@
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var salesInfo = new SaleInfo()
+            {
+                DataContext = new ViewModels.SaleInfo()
+            }; 
+            NavigationService.Navigate(salesInfo);
+        }
     }
 }

@@ -7,8 +7,7 @@
     {
         public SaleInfo()
         {
-            InitializeComponent();
-            Loaded += (_, _) => { AnyTextBox.Focus(); };
+            InitializeComponent();            
         }
     }
 }

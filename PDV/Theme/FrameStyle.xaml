@@ -1,0 +1,30 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <ControlTemplate x:Key="FrameWithNavegationBar" TargetType="Frame">
+        <DockPanel Margin="7">
+
+            <Grid Margin="7" Width="200" HorizontalAlignment="Left"
+                      DockPanel.Dock="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button Content="Voltar" 
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            Command="{x:Static NavigationCommands.BrowseBack}" 
+                            IsEnabled="{TemplateBinding CanGoBack}"/>
+                <Button Content="Avançar" Grid.Column="1"
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            Command="{x:Static NavigationCommands.BrowseForward}" 
+                            IsEnabled="{TemplateBinding CanGoForward}"/>
+
+            </Grid>
+            <Separator DockPanel.Dock="Top" Opacity=".62"/>
+
+            <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth0" Background="{DynamicResource MaterialDesignPaper}" UniformCornerRadius="16">
+                <ContentPresenter Margin="16" />
+            </materialDesign:Card>
+        </DockPanel>
+    </ControlTemplate>
+
+</ResourceDictionary>

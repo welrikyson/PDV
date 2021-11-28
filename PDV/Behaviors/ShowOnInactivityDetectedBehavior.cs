@@ -1,30 +1,41 @@
-﻿using PDV.Ultis.Moc;
+﻿using Microsoft.Xaml.Behaviors;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Navigation;
 
-namespace PDV.Views
+namespace PDV.Behaviors
 {
-    /// <summary>
-    /// Interaction logic for DefaultPage.xaml
-    /// </summary>
-    public partial class DefaultPage
+    public class ShowOnInactivityDetectedBehavior : Behavior<Grid>
     {
-        InactivityDetector inactivityDetector = new(TimeSpan.FromSeconds(4));
+        private InactivityDetector? _inactivityDetector;
         private Point _inactiveMousePosition;
-        private Window parentWindow;
 
-        public DefaultPage()
+        public TimeSpan InativityTime { get; set; }
+
+        public FrameworkElement Content { get; set; } = new Grid();
+        protected override void OnAttached()
         {
-            InitializeComponent();
-            inactivityDetector.DetectedInactivity += () =>
-                 Dispatcher.Invoke(ShowLockScreen);
+            var index = AssociatedObject.Children.Count +1;
+            Panel.SetZIndex(Content, index);
+            AssociatedObject.Children.Add(Content);
+            _inactivityDetector = new(InativityTime);
+            _inactivityDetector.DetectedInactivity += () =>
+                 Dispatcher.Invoke(ShowElement);
+        }
+
+        private void ShowElement()
+        {
+            Content.Visibility = Visibility.Visible;            
             _inactiveMousePosition = Mouse.GetPosition(Application.Current.MainWindow);
-            parentWindow = Application.Current.MainWindow;            
+            InputManager.Current.PreProcessInput += OnActivity;
         }
 
         private void OnActivity(object sender, PreProcessInputEventArgs e)
@@ -40,35 +51,26 @@ namespace PDV.Views
                     mea.XButton2 == MouseButtonState.Released &&
                     _inactiveMousePosition == mea.GetPosition(Application.Current.MainWindow))
                 {
-                    Debug.WriteLine("mouseMove\n");
                     return;
                 }
-                HiddenAndDisableEventAnddRestartDetector();
+                Debug.WriteLine("Event Mouse Click/M\n");
+
             }
-        }
-
-        private void ShowLockScreen()
-        {
-            Visibility = Visibility.Visible;
-            parentWindow.PreviewKeyDown += KeyDownHandler;
-            InputManager.Current.PreProcessInput += OnActivity;
-        }
-
-        private void KeyDownHandler(object sender, KeyEventArgs e)
-        {
+            else if (inputEventArgs is not KeyEventArgs)
+            {
+                return;
+            }
             HiddenAndDisableEventAnddRestartDetector();
         }
 
         private void HiddenAndDisableEventAnddRestartDetector()
         {
-            Visibility = Visibility.Hidden;
-            parentWindow.PreviewKeyDown -= KeyDownHandler;
+            Content.Visibility = Visibility.Hidden;
             InputManager.Current.PreProcessInput -= OnActivity;
-            inactivityDetector.Start();
+            _inactivityDetector?.Start();
             _inactiveMousePosition = Mouse.GetPosition(Application.Current.MainWindow);
         }
     }
-
     public class InactivityDetector
     {
         private static readonly TimeSpan TickTimeSpan = TimeSpan.FromSeconds(1);

@@ -5,6 +5,8 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:mde="https://spiegelp.github.io/MaterialDesignExtensions/winfx/xaml"                     
                     xmlns:vms="clr-namespace:PDV.ViewModels"
+                    xmlns:behavior="clr-namespace:PDV.Behaviors"
+                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:controls="clr-namespace:PDV.Controls" xmlns:mb="http://schemas.microsoft.com/xaml/behaviors" xmlns:local="clr-namespace:PDV.Views"
                     mc:Ignorable="d"                   
                     d:DesignHeight="450" d:DesignWidth="800" 
@@ -17,45 +19,24 @@
                     Background="{DynamicResource MaterialDesignPaper}"                    
                     FadeContentIfInactive="False"                    
                     WindowStartupLocation="CenterScreen"
-                    MinHeight="700" MinWidth="1200">
+                    MinHeight="700" MinWidth="1200">    
     <Window.Resources>
-        <ControlTemplate x:Key="FrameTemplate" TargetType="Frame">
-            <DockPanel Margin="7">
-                
-                <Grid Margin="7" Width="200" HorizontalAlignment="Left"
-                      DockPanel.Dock="Top">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>                    
-                    <Button Content="Voltar" 
-                            Style="{StaticResource MaterialDesignFlatButton}"
-                            Command="{x:Static NavigationCommands.BrowseBack}" 
-                            IsEnabled="{TemplateBinding CanGoBack}"/>
-                    <Button Content="Avançar" Grid.Column="1"
-                            Style="{StaticResource MaterialDesignFlatButton}"
-                            Command="{x:Static NavigationCommands.BrowseForward}" 
-                            IsEnabled="{TemplateBinding CanGoForward}"/>
-                    
-                </Grid>
-                <Separator DockPanel.Dock="Top" Opacity=".62"/>
-
-                <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth0" Background="{DynamicResource MaterialDesignPaper}" UniformCornerRadius="16">                    
-                    <ContentPresenter Margin="16" />
-                </materialDesign:Card>
-            </DockPanel>
-        </ControlTemplate>
         <ControlTemplate x:Key="MainGridTemplate"  TargetType="controls:MainGrid">
             <ContentPresenter />
         </ControlTemplate>
     </Window.Resources>
-    <Grid>        
+    <Grid>
+        <i:Interaction.Behaviors>
+            <behavior:ShowOnInactivityDetectedBehavior InativityTime="00:00:10">
+                <behavior:ShowOnInactivityDetectedBehavior.Content>
+                    <local:InactivityPage />
+                </behavior:ShowOnInactivityDetectedBehavior.Content>
+            </behavior:ShowOnInactivityDetectedBehavior>
+        </i:Interaction.Behaviors>
         <controls:MainGrid Template="{StaticResource MainGridTemplate}"
                            MKeyDown="MainGrid_MKeyDown">
-            <Frame x:Name="frame" Template="{StaticResource FrameTemplate}"/>            
+            <Frame x:Name="frame" Template="{StaticResource FrameWithNavegationBar}"/>
         </controls:MainGrid>
-
-        <controls:Dialog x:Name="Dialog" />
-        <local:DefaultPage x:Name="DefaulPage" Visibility="Hidden" />
+        <controls:Dialog x:Name="Dialog" />        
     </Grid>
 </mde:MaterialWindow>

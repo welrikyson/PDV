@@ -1,5 +1,11 @@
-﻿using System.Windows;
-
+﻿using PDV.Ultis.Moc;
+using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+using System.Timers;
+using System.Windows;
+using System.Windows.Input;
 
 namespace PDV.Views
 {
@@ -8,14 +14,16 @@ namespace PDV.Views
     /// </summary>
     public partial class MainWindow
     {
+        
         public MainWindow()
         {
             InitializeComponent();
-            frame.Navigate(new DefaultPage()
+            frame.Navigate(new ProductListChart()
             {
-                RemoveFromJournal = false
-            });
-        }
+                DataContext = new ViewModels.ProductListCart(Mock.CartItems)
+            });           
+            
+        }        
 
         private void MainGrid_MKeyDown(object sender, RoutedEventArgs e)
         {
@@ -37,5 +45,5 @@ namespace PDV.Views
                 }
             };
         }
-    }
+    }    
 }

@@ -49,12 +49,13 @@
             <ContentPresenter />
         </ControlTemplate>
     </Window.Resources>
-    <Grid>
+    <Grid>        
         <controls:MainGrid Template="{StaticResource MainGridTemplate}"
                            MKeyDown="MainGrid_MKeyDown">
             <Frame x:Name="frame" Template="{StaticResource FrameTemplate}"/>            
         </controls:MainGrid>
 
         <controls:Dialog x:Name="Dialog" />
+        <local:DefaultPage x:Name="DefaulPage" Visibility="Hidden" />
     </Grid>
 </mde:MaterialWindow>

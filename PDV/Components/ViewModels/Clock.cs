@@ -13,6 +13,7 @@ namespace PDV.Components.ViewModels
         public Clock()
         {
             _timer.Elapsed += (_, _) => OnTick();
+            _timer.BeginInit();
             _timer.Start();
         }
 

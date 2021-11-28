@@ -24,6 +24,7 @@ namespace PDV.Behaviors
         protected override void OnAttached()
         {
             var index = AssociatedObject.Children.Count +1;
+            Content.Visibility = Visibility.Hidden;
             Panel.SetZIndex(Content, index);
             AssociatedObject.Children.Add(Content);
             _inactivityDetector = new(InativityTime);

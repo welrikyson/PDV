@@ -18,10 +18,11 @@ namespace PDV.Views
         public MainWindow()
         {
             InitializeComponent();
+            var ProductListViewModel =  new ViewModels.ProductListCart(Mock.CartItems);            
             frame.Navigate(new ProductListChart()
             {
-                DataContext = new ViewModels.ProductListCart(Mock.CartItems)
-            });
+                DataContext = ProductListViewModel
+            });; 
         }        
 
         private void MainGrid_MKeyDown(object sender, RoutedEventArgs e)

@@ -8,7 +8,7 @@ namespace PDV.ViewModels
 {
     public class ProductListCart : ObservableObject, INavegable
     {
-        public IList<ChartItem> CartItems { get; private set; } = new ObservableCollection<ChartItem>();
+        public ObservableCollection<ChartItem> CartItems { get; private set; } = new ObservableCollection<ChartItem>();
         public bool ShouldExecutePreset { set; get; }
 
         public ProductListCart(List<ChartItem>? chartItems = null)

@@ -13,39 +13,112 @@ using System.Windows.Input;
 
 namespace PDV.Behaviors
 {
+    /// <summary>
+    /// avisa quando ocorre inatividade por determinado tempo
+    /// 
+    /// </summary>
+    public class InativityManager
+    {
+        TimeSpan InactivityTime { get; }
+        private readonly Timer InactivityTimer;
+        private Point lastMousePosition;
+        public event OnStatusChangedEventHander? OnStatusChangedEvent;
+
+        public InativityManager(TimeSpan? inactivityTime)
+        {
+            if (inactivityTime == null) throw new ArgumentNullException(nameof(inactivityTime), "Inactivity time não pode ser nula.");
+            InactivityTime = inactivityTime.Value;
+
+            InactivityTimer = new(InactivityTime.TotalMilliseconds);
+            InactivityTimer.Elapsed += EpapsedTimerInactivityHandler;
+
+            InputManager.Current.PreProcessInput += OnActivity;
+        }
+
+        private void OnActivity(object sender, PreProcessInputEventArgs e)
+        {
+            bool HasActivityValid = e.StagingItem.Input switch
+            {
+                MouseEventArgs mouseEventArgs =>
+                    mouseEventArgs.LeftButton != MouseButtonState.Released ||
+                    mouseEventArgs.RightButton != MouseButtonState.Released ||
+                    mouseEventArgs.MiddleButton != MouseButtonState.Released ||
+                    mouseEventArgs.XButton1 != MouseButtonState.Released ||
+                    mouseEventArgs.XButton2 != MouseButtonState.Released ||
+                    //curso move
+                    MouseMove(mouseEventArgs.GetPosition(Application.Current.MainWindow)),
+                KeyEventArgs => true,
+                _ => false,
+            };
+
+            if (HasActivityValid && Status == InactivityStatus.Active)
+            {
+                RestartTimer();
+            }else if(Status == InactivityStatus.Inactive && HasActivityValid)
+            {
+                Status = InactivityStatus.Active;
+                OnStatusChangedEvent?.Invoke(new(Status));
+            }
+        }
+
+        private bool MouseMove(Point newCursoPosition)
+        {
+            if (lastMousePosition == newCursoPosition)
+            {
+                return false;
+            }
+            else
+            {
+                lastMousePosition = newCursoPosition;
+                return true;
+            }
+        }
+
+        private void RestartTimer()
+        {
+            StartTimer();
+            StopTimer();
+        }
+
+        public void StartTimer()
+        {
+            InactivityTimer.Start();
+        }
+        public void StopTimer()
+        {
+            InactivityTimer.Stop();
+        }
+
+        public InactivityStatus Status { get; private set; } = InactivityStatus.Active;
+
+        private void EpapsedTimerInactivityHandler(object sender, ElapsedEventArgs e)
+        {
+            StopTimer();
+            Status = InactivityStatus.Inactive;
+            OnStatusChangedEvent?.Invoke(new(Status));
+        }
+    }
+    public delegate void OnStatusChangedEventHander(OnInactivityDetectedEventArgs onInactivityDetectedEventArgs);
+    public class OnInactivityDetectedEventArgs : EventArgs
+    {
+        public OnInactivityDetectedEventArgs(InactivityStatus inactivityStatus)
+        {
+            InactivityStatus = inactivityStatus;
+        }
+
+        public InactivityStatus InactivityStatus { get; }
+    }
+    public enum InactivityStatus
+    {
+        Active,
+        Inactive,
+    }
+
+
+
     public class ShowOnInactivityDetectedBehavior : Behavior<Grid>
     {
-        private InactivityDetector? _inactivityDetector;
-        private Point _inactiveMousePosition;
-
-
-
-        public bool IsEnable
-        {
-            get { return (bool)GetValue(IsEnableProperty); }
-            set { SetValue(IsEnableProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for IsEnable.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty IsEnableProperty =
-            DependencyProperty.Register("IsEnable", typeof(bool), typeof(ShowOnInactivityDetectedBehavior), new PropertyMetadata(true, OnIsEnableChanged));
-
-        private static void OnIsEnableChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-
-
-            if (d is ShowOnInactivityDetectedBehavior inactivityDetectedBehavior)
-            {
-
-                if (e.NewValue.Equals(false))
-                    inactivityDetectedBehavior._inactivityDetector?.StopTimer();
-                else if (e.NewValue.Equals(true))
-                    inactivityDetectedBehavior._inactivityDetector?.Start();
-            }
-
-
-        }
-
+        private InativityManager? InativityManager;
         public TimeSpan InativityTime { get; set; }
 
         public FrameworkElement Content { get; set; } = new Grid();
@@ -55,102 +128,23 @@ namespace PDV.Behaviors
             Content.Visibility = Visibility.Hidden;
             Panel.SetZIndex(Content, index);
             AssociatedObject.Children.Add(Content);
-            _inactivityDetector = new(InativityTime);
-            _inactivityDetector.DetectedInactivity += () =>
-                 Dispatcher.Invoke(ShowElement);
+            InativityManager = new InativityManager(inactivityTime: InativityTime);
+            InativityManager.OnStatusChangedEvent += (e) =>
+                Dispatcher.Invoke(() => StatusChangedHandler(e));
+            InativityManager.StartTimer();
         }
 
-        private void ShowElement()
+        private void StatusChangedHandler(OnInactivityDetectedEventArgs e)
         {
-            Content.Visibility = Visibility.Visible;
-            _inactiveMousePosition = Mouse.GetPosition(Application.Current.MainWindow);
-            InputManager.Current.PreProcessInput += OnActivity;
-        }
-
-        private void OnActivity(object sender, PreProcessInputEventArgs e)
-        {
-            InputEventArgs inputEventArgs = e.StagingItem.Input;
-            if (inputEventArgs is MouseEventArgs mea)
+            Content.Visibility = e.InactivityStatus switch
             {
-                // no button is pressed and the position is still the same as the application became inactive
-                if (mea.LeftButton == MouseButtonState.Released &&
-                    mea.RightButton == MouseButtonState.Released &&
-                    mea.MiddleButton == MouseButtonState.Released &&
-                    mea.XButton1 == MouseButtonState.Released &&
-                    mea.XButton2 == MouseButtonState.Released &&
-                    _inactiveMousePosition == mea.GetPosition(Application.Current.MainWindow))
-                {
-                    return;
-                }
-                Debug.WriteLine("Event Mouse Click/M\n");
-
-            }
-            else if (inputEventArgs is not KeyEventArgs)
-            {
-                return;
-            }
-            HiddenAndDisableEventAnddRestartDetector();
-        }
-
-        private void HiddenAndDisableEventAnddRestartDetector()
-        {
-            Content.Visibility = Visibility.Hidden;
-            InputManager.Current.PreProcessInput -= OnActivity;
-            _inactivityDetector?.Start();
-            _inactiveMousePosition = Mouse.GetPosition(Application.Current.MainWindow);
-        }
-    }
-    public class InactivityDetector
-    {
-        private static readonly TimeSpan TickTimeSpan = TimeSpan.FromSeconds(1);
-        private readonly Timer _timer = new(TickTimeSpan.TotalMilliseconds);
-        private readonly double _secondsOfInativity;
-        public event Action? DetectedInactivity;
-
-        public InactivityDetector(TimeSpan time)
-        {
-            _secondsOfInativity = time.TotalSeconds;
-            _timer.Elapsed += OnTick;
-            _timer.Start();
+                InactivityStatus.Inactive => Visibility.Visible,
+                InactivityStatus.Active => Visibility.Hidden,
+                _ => throw new NotImplementedException(),
+            };
 
         }
-        private void OnTick(object sender, ElapsedEventArgs e)
-        {
-            Debug.WriteLine("TICK\n");
-            if (GetIdleTime() > _secondsOfInativity)
-            {
-                StopTimer();
-                DetectedInactivity?.Invoke();
-            }
-        }
-        [DllImport("user32.dll")]
-        static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
 
-        [StructLayout(LayoutKind.Sequential)]
-        struct LASTINPUTINFO
-        {
-            [MarshalAs(UnmanagedType.U4)]
-            public UInt32 cbSize;
-            [MarshalAs(UnmanagedType.U4)]
-            public UInt32 dwTime;
-        }
 
-        // returns seconds since last input
-        static long GetIdleTime()
-        {
-            var info = new LASTINPUTINFO { cbSize = (uint)Marshal.SizeOf(typeof(LASTINPUTINFO)) };
-            GetLastInputInfo(ref info);
-            return (Environment.TickCount - info.dwTime) / 1000;
-        }
-
-        public void StopTimer()
-        {
-            _timer.Stop();
-        }
-
-        internal void Start()
-        {
-            _timer.Start();
-        }
     }
 }

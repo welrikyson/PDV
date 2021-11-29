@@ -10,11 +10,10 @@ namespace PDV
     /// </summary>
     public partial class App
     {
-        private readonly IHost _host;
+        private readonly IHost _host = ConfigureHostBuilder().Build();
         public App()
         {
-            var hostbuilder = ConfigureHostBuilder();
-            _host = hostbuilder.Build();
+            _host.Start();
         }
 
         private static IHostBuilder ConfigureHostBuilder() =>
@@ -27,14 +26,15 @@ namespace PDV
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            base.OnStartup(e);
-            _host.Start();
+            base.OnStartup(e);         
 
             var serviceProvider = _host.Services;
 
             serviceProvider.GetRequiredService<MainWindow>().Show();
         }
     }
+
+
     public static class AddViewModelsHostBuilderExtensions
     {
         public static IHostBuilder AddViewModels(this IHostBuilder hostBuilder) =>
@@ -43,4 +43,5 @@ namespace PDV
 
             });
     }
+
 }

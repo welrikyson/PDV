@@ -2,9 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:PDV.Controls" 
                     xmlns:sys="clr-namespace:System;assembly=System.Runtime" 
-                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+                    >
     <Style x:Key="GridGlass" TargetType="Grid">
         <Setter Property="Visibility" Value="Hidden" />
+        <Setter Property="Focusable" Value="False" />
         <Setter Property="Background">
             <Setter.Value>
                 <SolidColorBrush Color="Black" Opacity=".62"/>
@@ -25,19 +26,19 @@
     <Style TargetType="controls:Dialog">
         <Style.Setters>
             <Setter Property="Visibility" Value="Hidden" />
+            <Setter Property="Focusable" Value="False" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
                         <Grid>
                             <Grid Style="{StaticResource GridGlass}" Focusable="False" x:Name="Glass" Visibility="{TemplateBinding Visibility}"/>
-                            <materialDesign:Card Focusable="True"
-                                                 UniformCornerRadius="16" 
-                                                 VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Grid Focusable="False"
+                                  VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <StackPanel Margin="8 0 8 16">
                                     <Button IsCancel="True" Focusable="False"
                                             HorizontalAlignment="Right"
-                                            Content="{materialDesign:PackIcon Kind=CloseBold}"
-                                            Style="{StaticResource MaterialDesignFlatButton}"
+                                            Content="x"
+                                            Style="{StaticResource AppFlatButton}"
                                             Command="{x:Static controls:DialogCommands.Close}"/>
                                     <ContentPresenter x:Name="ContentPresenter" 
                                                       Grid.Row="1" 
@@ -45,7 +46,7 @@
                                                       ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" 
                                                       ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}"/>
                                 </StackPanel>
-                            </materialDesign:Card>
+                            </Grid>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>

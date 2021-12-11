@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace PDV.Views.UserControls
+namespace PDV.Components.UserControls
 {
     /// <summary>
     /// Interaction logic for Clock.xaml

@@ -18,7 +18,7 @@ namespace PDV.Views
         public MainWindow()
         {
             InitializeComponent();
-            var ProductListViewModel =  new ViewModels.ProductListCart(Mock.CartItems);            
+            var ProductListViewModel =  new ViewModels.Cart(Mock.CartItems);            
             frame.Navigate(new ProductListChart()
             {
                 DataContext = ProductListViewModel
@@ -28,6 +28,14 @@ namespace PDV.Views
         private void MainGrid_MKeyDown(object sender, RoutedEventArgs e)
         {
             ViewModels.MenuOptions menuOptions = new();
+            menuOptions.OptionSelected += (selectedItem) =>
+            {
+                Dialog.DialogService.CloseDialog();
+                if (frame.Content is UIElement page)
+                {
+                    page.Focus();
+                }
+            };
 
             GereralMenu viewMenuOptions = new()
             {
@@ -41,15 +49,7 @@ namespace PDV.Views
                 {
                     page.Focus();
                 }
-            };
-            menuOptions.OptionSelected += () =>
-            {
-                Dialog.DialogService.CloseDialog();
-                if (frame.Content is UIElement page)
-                {
-                    page.Focus();
-                }
-            };
+            };            
         }
     }    
 }

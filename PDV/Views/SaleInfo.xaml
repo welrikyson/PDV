@@ -11,7 +11,7 @@
         <StackPanel HorizontalAlignment="Left">
             <TextBlock Text="Finalizar venda"
                        Margin="0 0 0 16"
-                       Style="{StaticResource MaterialDesignHeadline6TextBlock}" />
+                       Style="{StaticResource AppHeadline6TextBlock}" />
             <TextBox x:Name="AnyTextBox" Width="200" />
             <Button Content="Emitir cupom fiscal"/>
 

@@ -10,10 +10,10 @@
                             <TextBox x:Name="PART_TextBox" MinWidth="120" Padding="40 16"/>
                             <RepeatButton x:Name="PART_NumericDown" HorizontalAlignment="Left" 
                                           Focusable="False"
-                                          Style="{StaticResource MaterialDesignFlatButton}">-</RepeatButton>
+                                          >-</RepeatButton>
                             <RepeatButton x:Name="PART_NumericUp" HorizontalAlignment="Right" 
                                           Focusable="False"
-                                          Style="{StaticResource MaterialDesignFlatButton}">+</RepeatButton>
+                                          >+</RepeatButton>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>

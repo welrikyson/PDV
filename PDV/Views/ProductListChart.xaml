@@ -8,11 +8,11 @@
              xmlns:vm="clr-namespace:PDV.ViewModels"
              xmlns:models="clr-namespace:PDV.Models" 
              xmlns:controls="clr-namespace:PDV.Controls" 
-             xmlns:MaterialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"                
+                             
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              FocusManager.IsFocusScope="True"             
              FocusManager.FocusedElement="{Binding ElementName=SearchTermTxb}"
-             d:DataContext="{d:DesignInstance Type={x:Type vm:ProductListCart}}">
+             d:DataContext="{d:DesignInstance Type={x:Type vm:Cart}}">
     <Grid>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -20,39 +20,36 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Grid>
+
+            <StackPanel HorizontalAlignment="Left"
+                                Margin="16" Grid.Row="0" Grid.ColumnSpan="2">
+                <TextBlock Text="PDV"
+                                   Margin="0 0 0 16"
+                                   Style="{StaticResource AppHeadline6TextBlock}" />
+                <TextBox Name="SearchTermTxb" CharacterCasing="Upper"
+                             Width="800" TabIndex="1" FontSize="64"
+                             Style="{StaticResource AppOutlinedTextBox}" />
+            </StackPanel>
+
+            <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <MaterialDesign:Card Margin="8 16 16 16" 
-                                     UniformCornerRadius="16"
-                                     Grid.Row="0">
-                    <StackPanel HorizontalAlignment="Left"
-                                Margin="16">
-                        <TextBlock Text="PDV"
-                                   Margin="0 0 0 16"
-                                   Style="{StaticResource MaterialDesignHeadline6TextBlock}" />
-                        <TextBox MaterialDesign:HintAssist.Hint="Pesquise por descrição ou código"
-                                 Name="SearchTermTxb" CharacterCasing="Upper"
-                                 MaterialDesign:HintAssist.IsFloating="False"
-                                 Width="400" TabIndex="1"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}" />
-                    </StackPanel>
-                </MaterialDesign:Card>
-                <MaterialDesign:Card Grid.Row="1" Grid.RowSpan="3"  
-                                     Margin="8 16 16 16" UniformCornerRadius="16"
-                                     DataContext="{Binding ElementName=listCartItems,Path=SelectedItem}"
-                                     d:DataContext="{d:DesignInstance Type={x:Type models:ChartItem}}">
-                    <MaterialDesign:Card.Resources>
-                        <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
+                <Grid Grid.Row="1" Grid.RowSpan="3"  
+                      Margin="8 16 16 16" 
+                      DataContext="{Binding ElementName=listCartItems,Path=SelectedItem}"
+                      d:DataContext="{d:DesignInstance Type={x:Type models:ChartItem}}">
+                    <Grid.Resources>
+                        <Style TargetType="TextBox" BasedOn="{StaticResource AppOutlinedTextBox}">
                             <Setter Property="FontSize" Value="18" />
                         </Style>
-                        <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignSubtitle2TextBlock}"/>
-                    </MaterialDesign:Card.Resources>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource AppSubtitle2TextBlock}"/>
+                    </Grid.Resources>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" 
                                 HorizontalAlignment="Stretch">
                         <StackPanel Orientation="Vertical">
@@ -66,7 +63,7 @@
                             </Border>
                             <TextBlock VerticalAlignment="Center" Margin="8 0 0 0"
                                        Text="{Binding Product.Name}" Width="150" TextAlignment="Center"
-                                       Style="{StaticResource MaterialDesignSubtitle2TextBlock}" 
+                                       Style="{StaticResource AppSubtitle2TextBlock}" 
                                        TextWrapping="Wrap" />
                         </StackPanel>
                         <StackPanel Margin="16">
@@ -96,50 +93,40 @@
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
-                </MaterialDesign:Card>
+                </Grid>
             </Grid>
-
-            <Grid Grid.Column="1">
+            <Grid Grid.Column="1" Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <MaterialDesign:Card Margin="16" UniformCornerRadius="16" 
-                                     Grid.Column="1">
-                    <ListView x:Name="listCartItems" Margin="16"
-                              ItemsSource="{Binding CartItems}"
+                <Grid Margin="16"
+                      Grid.Column="1">
+                    <DataGrid x:Name="listCartItems" Margin="16"
+                              ItemsSource="{Binding CartItems}" AutoGenerateColumns="False"
                               SelectedIndex="0">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid d:DataContext="{x:Type models:ChartItem}">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="300"/>
-                                        <ColumnDefinition Width="100"/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Text="{Binding Product.Name}"></TextBlock>
-                                    <TextBlock Grid.Column="1" Text="{Binding Total}"></TextBlock>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Product" Binding="{Binding Product.Name}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Price" Binding="{Binding Product.Price}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Qtd" Binding="{Binding  Count}"/>
+                            <DataGridTextColumn Header="Qtd" Binding="{Binding  Total}" IsReadOnly="True"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
 
-
-                </MaterialDesign:Card>
-
-                <MaterialDesign:Card Margin="16 16 16 16" UniformCornerRadius="16" 
-                                     Grid.Row="1">
-                    <StackPanel Margin="16">
-                        <TextBlock Text="Total da venda" Style="{StaticResource MaterialDesignSubtitle2TextBlock}"/>
-                        <TextBlock Text="{Binding Total,StringFormat='C'}" Style="{StaticResource MaterialDesignHeadline3TextBlock}" />
-                    </StackPanel>
-                </MaterialDesign:Card>
             </Grid>
-
-            <StackPanel Grid.Row="1" HorizontalAlignment="Left" Margin="8">
-                <Button TabIndex="2" Height="80"  Width="180"
-                        MaterialDesign:ButtonAssist.CornerRadius="16" Click="Button_Click">
-                    <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}">
+            <Grid Margin="16 16 16 16" 
+                  Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left">
+                <StackPanel Margin="16">
+                    <TextBlock Text="Total da venda" Style="{StaticResource AppSubtitle2TextBlock}"/>
+                    <TextBlock Text="{Binding Total,StringFormat='C'}" Style="{StaticResource AppHeadline3TextBlock}" />
+                </StackPanel>
+            </Grid>
+            <StackPanel Grid.Row="2" HorizontalAlignment="Left" Margin="8">
+                <Button TabIndex="2" Height="80"  Width="180" Style="{StaticResource ButtonPrimary}"
+                        Click="Button_Click">
+                    <TextBlock Style="{StaticResource AppHeadline6TextBlock}">
                     FINALIZAR<LineBreak/>
                     <Run FontSize="12">(crtl+enter)</Run>
                     </TextBlock>

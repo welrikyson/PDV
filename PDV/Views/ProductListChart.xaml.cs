@@ -34,9 +34,9 @@ namespace PDV.Views
             NavigationService.Navigate(salesInfo);
         }
 
-        private void NumericUpDown_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void NumericUpDown_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == System.Windows.Input.Key.Enter)
+            if (e.Key == Key.Enter)
                 SearchTermTxb.Focus();
         }
     }

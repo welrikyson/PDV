@@ -7,7 +7,7 @@
     {
         public SaleInfo()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
     }
 }

@@ -29,6 +29,6 @@
         <uc:Option DataContext="{Binding OptionClose}" 
                    Grid.Column="0" Grid.Row="1"/>
         <uc:Option DataContext="{Binding OptionFindItem}" 
-                   Grid.Column="1" Grid.Row="1"/>
+                   Grid.Column="1" Grid.Row="1" IsTabStop="True"/>
     </Grid>
 </UserControl>

@@ -6,12 +6,12 @@ using System.Collections.ObjectModel;
 
 namespace PDV.ViewModels
 {
-    public class ProductListCart : ObservableObject, INavegable
+    public class Cart : ObservableObject, INavegable
     {
         public ObservableCollection<ChartItem> CartItems { get; private set; } = new ObservableCollection<ChartItem>();
         public bool ShouldExecutePreset { set; get; }
 
-        public ProductListCart(List<ChartItem>? chartItems = null)
+        public Cart(List<ChartItem>? chartItems = null)
         {
             chartItems?.ForEach(AddItem);
         }

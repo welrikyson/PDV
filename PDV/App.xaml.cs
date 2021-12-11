@@ -30,7 +30,10 @@ namespace PDV
 
             var serviceProvider = _host.Services;
 
-            serviceProvider.GetRequiredService<MainWindow>().Show();
+            var mainWindow = serviceProvider.GetRequiredService<MainWindow>();
+            mainWindow.DataContext = new MainViewModel();
+            mainWindow.Show();
+
         }
     }
 

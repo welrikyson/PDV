@@ -1,4 +1,5 @@
 ﻿using Microsoft.Toolkit.Mvvm.Input;
+using PDV.Ultis.Moc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +12,14 @@ namespace PDV.ViewModels
     public class Sale
     {
         public Sale()
-        {
-            Cart = new Cart();
+        {            
+            Cart = new Cart(Mock.CartItems);
             Finalize = new RelayCommand(FinalizeHandler);
         }
 
         private void FinalizeHandler()
         {
+
             //navigate Finalize Sale screen
         }
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace PDV.Views
 {
@@ -14,42 +15,15 @@ namespace PDV.Views
     /// </summary>
     public partial class MainWindow
     {
-        
         public MainWindow()
         {
+
             InitializeComponent();
-            var ProductListViewModel =  new ViewModels.Cart(Mock.CartItems);            
-            frame.Navigate(new ProductListChart()
+            Dialog.Closed += (s, e) =>
             {
-                DataContext = ProductListViewModel
-            });; 
-        }        
-
-        private void MainGrid_MKeyDown(object sender, RoutedEventArgs e)
-        {
-            ViewModels.MenuOptions menuOptions = new();
-            menuOptions.OptionSelected += (selectedItem) =>
-            {
-                Dialog.DialogService.CloseDialog();
-                if (frame.Content is UIElement page)
-                {
-                    page.Focus();
-                }
+                frame.Focus();                
             };
-
-            GereralMenu viewMenuOptions = new()
-            {
-                DataContext = menuOptions
-            };
-
-            Dialog.DialogService.ShowDialog(viewMenuOptions);
-            Dialog.Closed += (s,e) =>
-            {
-                if (frame.Content is UIElement page)
-                {
-                    page.Focus();
-                }
-            };            
+            frame.Navigate(new ViewModels.Sale());
         }
-    }    
+    }
 }

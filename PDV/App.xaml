@@ -8,14 +8,12 @@
                 <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/PDV;component/Theme/Theme.xaml"/>
-                <!-- custom controls-->
+                
+                <!--#region theme -->
                 <ResourceDictionary Source="pack://application:,,,/PDV;component/Theme/DialogStyle.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/PDV;component/Theme/NumericUpDown.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/PDV;component/Theme/FrameStyle.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-            <ControlTemplate x:Key="MainGridTemplate"  TargetType="controls:MainGrid">
-                <ContentPresenter />
-            </ControlTemplate>
+                <!--#endregion-->
+            </ResourceDictionary.MergedDictionaries>            
         </ResourceDictionary>
     </Application.Resources>    
 </Application>

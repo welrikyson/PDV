@@ -22,7 +22,13 @@ namespace PDV.Views
     {
         public Sale()
         {
-            InitializeComponent();
+            InitializeComponent();            
+        }       
+
+        private void NumericUpDown_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                SearchTermTxb.Focus();
         }
     }
 }

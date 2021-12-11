@@ -13,7 +13,7 @@ namespace PDV.Controls
         {
             DefaultStyleKeyProperty.OverrideMetadata(
                 typeof(MainGrid),
-                new FrameworkPropertyMetadata(typeof(MainGrid)));
+                new FrameworkPropertyMetadata(typeof(ContentControl)));
         }
         public MainGrid()
         {

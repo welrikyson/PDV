@@ -6,30 +6,47 @@
                xmlns:behavior="clr-namespace:PDV.Behaviors"
                xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                xmlns:controls="clr-namespace:PDV.Controls" 
-               xmlns:local="clr-namespace:PDV.Views"
+               xmlns:local="clr-namespace:PDV"
                mc:Ignorable="d"                   
                d:DesignHeight="450" d:DesignWidth="800"                     
                TextElement.FontWeight="Regular"
                TextElement.FontSize="13"
                TextOptions.TextFormattingMode="Ideal"
                TextOptions.TextRenderingMode="Auto"
-               xmlns:hc="https://handyorg.github.io/handycontrol"                    
-               Style="{StaticResource WindowWin10}"
+               xmlns:hc="https://handyorg.github.io/handycontrol" xmlns:views="clr-namespace:PDV.Views"
+           Style="{StaticResource WindowWin10}"
+           xmlns:vms="clr-namespace:PDV.ViewModels"
+           xmlns:view="clr-namespace:PDV.Views"
                WindowStartupLocation="CenterScreen"
-               MinHeight="700" MinWidth="1200">
+               MinHeight="700" MinWidth="1200"
+           d:DataContext="{d:DesignInstance Type=local:MainViewModel, IsDesignTimeCreatable=True}">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vms:MenuOptions}">
+            <view:GereralMenu />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:Sale}">
+            <view:Sale />
+        </DataTemplate>
+    </Window.Resources>
     <!--FontFamily="{DynamicResource MaterialDesignFont}"-->
     <Grid>
         <i:Interaction.Behaviors>
             <behavior:ShowOnInactivityDetectedBehavior InativityTime="00:00:10">
                 <behavior:ShowOnInactivityDetectedBehavior.Content>
-                    <local:InactivityPage />
+                    <views:InactivityPage />
                 </behavior:ShowOnInactivityDetectedBehavior.Content>
             </behavior:ShowOnInactivityDetectedBehavior>
         </i:Interaction.Behaviors>
-        <controls:MainGrid Template="{StaticResource MainGridTemplate}"
-                           MKeyDown="MainGrid_MKeyDown">
+        <controls:MainGrid>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MKeyDown">
+                    <i:EventTrigger.Actions>
+                        <i:InvokeCommandAction Command="{Binding OpenMenu}"/>
+                    </i:EventTrigger.Actions>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <Frame x:Name="frame" Template="{StaticResource FrameWithNavegationBar}"/>
         </controls:MainGrid>
-        <controls:Dialog x:Name="Dialog" />
+        <controls:Dialog x:Name="Dialog" DialogService="{Binding DialogService}"/>
     </Grid>
 </hc:Window>

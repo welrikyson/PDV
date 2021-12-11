@@ -82,8 +82,9 @@ namespace PDV.Controls
                 {
                     if (item.Equals(this)) continue;
                     item.IsEnabled = true;
-                }
+                }                
             }
+            
             IsOpen = false;
         }
 

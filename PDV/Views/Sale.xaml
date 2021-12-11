@@ -4,11 +4,130 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PDV.Views"
+      xmlns:vm="clr-namespace:PDV.ViewModels" xmlns:mah="https://handyorg.github.io/handycontrol"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Sale">
+      Title="Sale"
+      FocusManager.IsFocusScope="True"
+      FocusManager.FocusedElement="{Binding ElementName=SearchTermTxb}"
+      d:DataContext="{d:DesignInstance Type={x:Type vm:Sale}}">
 
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.4*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel HorizontalAlignment="Left"
+                                Margin="16" Grid.Row="0" Grid.ColumnSpan="2">
+            <TextBlock Text="PDV"
+                                   Margin="0 0 0 16"
+                                   Style="{StaticResource AppHeadline6TextBlock}" />
+            <TextBox Name="SearchTermTxb" CharacterCasing="Upper"
+                             Width="800" TabIndex="1" FontSize="64"
+                             Style="{StaticResource AppOutlinedTextBox}" />
+        </StackPanel>
+
+        <Grid Grid.Row="1" DataContext="{Binding Cart}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="1" Grid.RowSpan="3"  
+                      Margin="8 16 16 16" 
+                      DataContext="{Binding ElementName=listCartItems,Path=SelectedItem}"
+                      d:DataContext="{d:DesignInstance Type={x:Type models:ChartItem}}">
+                <Grid.Resources>
+                    <Style TargetType="TextBox" BasedOn="{StaticResource AppOutlinedTextBox}">
+                        <Setter Property="FontSize" Value="18" />
+                    </Style>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource AppSubtitle2TextBlock}"/>
+                </Grid.Resources>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" 
+                                HorizontalAlignment="Stretch">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 8 0 0">
+                            <TextBlock VerticalAlignment="Bottom" >
+                                    ID: <Run FontWeight="DemiBold" Text="{Binding Product.Id}"></Run>
+                            </TextBlock>
+                        </StackPanel>
+                        <Border BorderThickness="1" CornerRadius="16">
+                            <Image Height="200" Width="400" Source="pack://application:,,,/Images/item.jpg" />
+                        </Border>
+                        <TextBlock VerticalAlignment="Center" Margin="8 0 0 0"
+                                       Text="{Binding Product.Name}" Width="150" TextAlignment="Center"
+                                       Style="{StaticResource AppSubtitle2TextBlock}" 
+                                       TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Margin="16">
+                        <StackPanel Margin="0 8 0 0">
+                            <TextBlock Text="Quantidade" Width="100" VerticalAlignment="Bottom" 
+                                           HorizontalAlignment="Left" />
+                            <mah:NumericUpDown Value="{Binding Count}" 
+                                               Minimum="1" Maximum="9999" 
+                                               FontSize="20" MinWidth="120" KeyDown="NumericUpDown_KeyDown"/>
+                        </StackPanel>
+                        <StackPanel Margin="0 8">
+                            <TextBlock Text="Preço Un" Width="100" VerticalAlignment="Bottom" 
+                                           HorizontalAlignment="Left" />
+                            <TextBox Text="{Binding Product.Price, Mode=OneWay}" 
+                                         IsReadOnly="True" Focusable="False" 
+                                         MinWidth="120" TextAlignment="Center" />
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="Preço Total" 
+                                           HorizontalAlignment="Left" 
+                                           Width="100" VerticalAlignment="Bottom" />
+                            <TextBox Text="{Binding Total, Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Foreground="{DynamicResource PrimaryHueMidBrush}" 
+                                         IsReadOnly="True" Focusable="False" 
+                                         MinWidth="120" TextAlignment="Center" />
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid Margin="16"
+                      Grid.Column="1" DataContext="{Binding Cart}">
+                <DataGrid x:Name="listCartItems" Margin="16"
+                              ItemsSource="{Binding CartItems}" AutoGenerateColumns="False"
+                              SelectedIndex="0">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Product" Binding="{Binding Product.Name}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Price" Binding="{Binding Product.Price}" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Qtd" Binding="{Binding  Count}"/>
+                        <DataGridTextColumn Header="Qtd" Binding="{Binding  Total}" IsReadOnly="True"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+
+        </Grid>
+        <Grid Margin="16 16 16 16" DataContext="{Binding Cart}"
+                  Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left">
+            <StackPanel Margin="16">
+                <TextBlock Text="Total da venda" Style="{StaticResource AppSubtitle2TextBlock}"/>
+                <TextBlock Text="{Binding Total,StringFormat='C'}" Style="{StaticResource AppHeadline3TextBlock}" />
+            </StackPanel>
+        </Grid>
+        <StackPanel Grid.Row="2" HorizontalAlignment="Left" Margin="8">
+            <Button TabIndex="2" Height="80"  Width="180" Style="{StaticResource ButtonPrimary}"
+                        Command="{Binding Finalize}">
+                <TextBlock Style="{StaticResource AppHeadline6TextBlock}">
+                    FINALIZAR<LineBreak/>
+                    <Run FontSize="12">(crtl+enter)</Run>
+                </TextBlock>
+            </Button>
+        </StackPanel>
     </Grid>
 </Page>

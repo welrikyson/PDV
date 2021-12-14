@@ -33,20 +33,20 @@ namespace PDV
         {
             var menuOptions = new MenuOptions();
             var option = await DialogService.Show(menuOptions);
-            if(option != null)
+            if (option == null) return;
+
+            if (option is MenuOptionFind)
             {
-                if(option is MenuOptionFind)
+                var product = await DialogService.Show(new ProductFinder());
+
+                if (product != null && CurrentViewModel is Sale sale)
                 {
-                    var product = await DialogService.Show(new ProductFinder());
-                    
-                    if(product != null &&this.CurrentViewModel is Sale sale)
-                    {
-                        sale.Cart.AddItem(new Models.CartItem(product,1));
-                    }
+                    sale.Cart.AddItem(new Models.CartItem(product, 1));
                 }
-            }            
+            }
+
         }
-        
+
         public ICommand OpenMenu { get; set; }
     }
 }

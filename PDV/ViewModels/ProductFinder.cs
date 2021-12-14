@@ -29,9 +29,14 @@ namespace PDV.ViewModels
         public ProductFinder()
         {
             Products = new();
-            Confirm = new RelayCommand<Product>(ConfirmHandler);
+            Confirm = new RelayCommand<Product>(ConfirmHandler, CanExecuteConfirm);
             Find = new AsyncRelayCommand<string>(FindHandlerTaskAsync);
             ProductService = new ProductService(new ProductRepository());
+        }
+
+        private bool CanExecuteConfirm(Product? obj)
+        {
+            return obj != null;
         }
 
         private async Task FindHandlerTaskAsync(string? arg)
@@ -45,9 +50,7 @@ namespace PDV.ViewModels
         private CancellationTokenSource? CancellationTokenSource;
         private async Task FindHandlerAsync(string? searchTerm, CancellationToken cancellationToken)
         {
-            TaskCompletionSource tcs = new();
-
-            if (string.IsNullOrEmpty(searchTerm) || searchTerm.Length < 3)
+            if (string.IsNullOrEmpty(searchTerm) || searchTerm.Length < 1)
             {
                 if (Products.Count > 0)
                 {
@@ -56,8 +59,8 @@ namespace PDV.ViewModels
                 }
             }
             else
-            {                
-                var result = await ProductService.GetProducts(searchTerm,cancellationToken);
+            {
+                var result = await ProductService.GetProducts(searchTerm, cancellationToken);
                 Products = result;
                 OnPropertyChanged(nameof(Products));
             }

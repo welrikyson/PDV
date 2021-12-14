@@ -44,6 +44,8 @@ namespace PDV.Controls
 
                 dialogService.CloseDialogEvent +=
                      OnClosedDialogHandler;
+                this.Closed += dialogService.DisposeTask;
+
             }
         }
 
@@ -81,7 +83,7 @@ namespace PDV.Controls
                 }                
             }
             Content = null;
-            IsOpen = false;
+            IsOpen = false;           
             
         }
 

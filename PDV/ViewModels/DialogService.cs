@@ -1,6 +1,7 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 using PDV.Interfaces;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace PDV.ViewModels
 {
@@ -13,11 +14,7 @@ namespace PDV.ViewModels
         {
             if (Current != null)
                 CloseDialogEvent?.Invoke(Current);
-            if(closeDialogOnTask != null)
-            {
-                closeDialogOnTask?.Invoke();
-                closeDialogOnTask= null;
-            }
+            
             
         }
         private delegate void OnCloseDialogInTask();
@@ -46,6 +43,15 @@ namespace PDV.ViewModels
         {
             Current = content;
             OpenDialogEvent?.Invoke(content);
+        }
+
+        public void DisposeTask(object sender, RoutedEventArgs e)
+        {
+            if (closeDialogOnTask != null)
+            {
+                closeDialogOnTask?.Invoke();
+                closeDialogOnTask = null;
+            }
         }
     }
 

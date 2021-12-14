@@ -1,5 +1,6 @@
 ﻿using PDV.ViewModels;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace PDV.Interfaces
 {
@@ -11,6 +12,8 @@ namespace PDV.Interfaces
 
         event CloseDialogEvent? CloseDialogEvent;
         event OpenDialogEvent? OpenDialogEvent;
+
+        void DisposeTask(object sender, RoutedEventArgs e);
     }
 
     public interface IDialog<TResult>

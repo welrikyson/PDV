@@ -54,11 +54,7 @@ namespace PDV.Controls
             Content = content;
             IsOpen = true;
             UpdateLayout();
-
-            if (content is UIElement element)
-            {
-                element.Focus();
-            }
+            
             if (Parent is Grid grid)
             {
                 foreach (UIElement item in grid.Children)
@@ -84,8 +80,9 @@ namespace PDV.Controls
                     item.IsEnabled = true;
                 }                
             }
-            
+            Content = null;
             IsOpen = false;
+            
         }
 
         static Dialog()

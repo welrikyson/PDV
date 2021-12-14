@@ -1,17 +1,19 @@
 ﻿<Application x:Class="PDV.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"             
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:controls="clr-namespace:PDV.Controls">
+             xmlns:controls="clr-namespace:PDV.Controls"
+             xmlns:hc="https://handyorg.github.io/handycontrol">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml"/>
+                <hc:Theme Skin="Default" AccentColor="Orange" />
                 <ResourceDictionary Source="pack://application:,,,/PDV;component/Theme/Theme.xaml"/>
                 
                 <!--#region theme -->
                 <ResourceDictionary Source="pack://application:,,,/PDV;component/Theme/DialogStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/PDV;component/Theme/FrameStyle.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/PDV;component/Theme/SearchStyle.xaml"/>
                 <!--#endregion-->
             </ResourceDictionary.MergedDictionaries>            
         </ResourceDictionary>

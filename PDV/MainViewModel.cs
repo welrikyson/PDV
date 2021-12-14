@@ -1,4 +1,5 @@
-﻿using Microsoft.Toolkit.Mvvm.Input;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Input;
 using PDV.Interfaces;
 using PDV.ViewModels;
 using System;
@@ -10,25 +11,42 @@ using System.Windows.Input;
 
 namespace PDV
 {
-    public class MainViewModel
+    public class MainViewModel : ObservableObject
     {
-        public IDialogService? DialogService { get; set; }
+        public IDialogService DialogService { get; }
+        public ObservableObject CurrentViewModel { get; private set; }
         public MainViewModel()
         {
-            OpenMenu = new RelayCommand(OpenMenuHandler);
+            OpenMenu = new AsyncRelayCommand(OpenMenuHandlerAsync);
             DialogService = new DialogService();
+            var sale = new Sale();
+            sale.FinalizeEventHandler += () =>
+            {
+                CurrentViewModel = new SaleInfo();
+                this.OnPropertyChanged(nameof(CurrentViewModel));
+
+            };
+            CurrentViewModel = sale;
         }
 
-        private void OpenMenuHandler()
+        private async Task OpenMenuHandlerAsync()
         {
             var menuOptions = new MenuOptions();
-            DialogService?.ShowDialog(menuOptions);
-            menuOptions.OptionSelected += (s) =>
+            var option = await DialogService.Show(menuOptions);
+            if(option != null)
             {
-                DialogService?.CloseDialog();
-            };
+                if(option is MenuOptionFind)
+                {
+                    var product = await DialogService.Show(new ProductFinder());
+                    
+                    if(product != null &&this.CurrentViewModel is Sale sale)
+                    {
+                        sale.Cart.AddItem(new Models.CartItem(product,1));
+                    }
+                }
+            }            
         }
-
+        
         public ICommand OpenMenu { get; set; }
     }
 }

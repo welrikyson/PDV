@@ -1,4 +1,5 @@
-﻿using Microsoft.Toolkit.Mvvm.Input;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Input;
 using PDV.Ultis.Moc;
 using System;
 using System.Collections.Generic;
@@ -9,17 +10,17 @@ using System.Windows.Input;
 
 namespace PDV.ViewModels
 {
-    public class Sale
+    public class Sale : ObservableObject
     {
         public Sale()
         {            
             Cart = new Cart(Mock.CartItems);
             Finalize = new RelayCommand(FinalizeHandler);
         }
-
+        public event Action? FinalizeEventHandler;
         private void FinalizeHandler()
         {
-
+            FinalizeEventHandler?.Invoke();
             //navigate Finalize Sale screen
         }
 

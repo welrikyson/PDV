@@ -1,12 +1,14 @@
 ﻿using PDV.Ultis.Moc;
 using System;
 using System.Diagnostics;
+using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Web;
 
 namespace PDV.Views
 {
@@ -15,15 +17,14 @@ namespace PDV.Views
     /// </summary>
     public partial class MainWindow
     {
+        MainViewModel? ViewModel;
         public MainWindow()
         {
-
-            InitializeComponent();
-            Dialog.Closed += (s, e) =>
+            InitializeComponent();            
+            if(DataContext is MainViewModel viewModel)
             {
-                frame.Focus();                
-            };
-            frame.Navigate(new ViewModels.Sale());
+                ViewModel = viewModel;
+            }
         }
     }
 }

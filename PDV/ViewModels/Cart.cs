@@ -8,21 +8,21 @@ namespace PDV.ViewModels
 {
     public class Cart : ObservableObject, INavegable
     {
-        public ObservableCollection<ChartItem> CartItems { get; private set; } = new ObservableCollection<ChartItem>();
+        public ObservableCollection<CartItem> CartItems { get; private set; } = new ObservableCollection<CartItem>();
         public bool ShouldExecutePreset { set; get; }
 
-        public Cart(List<ChartItem>? chartItems = null)
+        public Cart(List<CartItem>? chartItems = null)
         {
             chartItems?.ForEach(AddItem);
         }
 
-        public void AddItem(ChartItem chartItem)
+        public void AddItem(CartItem chartItem)
         {
             CartItems.Add(chartItem);
             OnItemAdd(chartItem);
         }
 
-        private void OnItemAdd(ChartItem CartItemAdded)
+        private void OnItemAdd(CartItem CartItemAdded)
         {
             AddOnTotalAndNotify(CartItemAdded.Total);
             CartItemAdded.TotalChange += OnCartItemTotalChanged;

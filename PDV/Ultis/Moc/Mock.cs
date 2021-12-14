@@ -21,11 +21,15 @@ namespace PDV.Ultis.Moc
                 (22.90m,"Pão de alho",2),
                 (16.00m,"Carvão",1), };
 
-        public static List<Models.ChartItem> CartItems
+        public static List<Models.CartItem> CartItems
         =>
             (from c in TupleCartItemArray
              let product = new Models.Product(IncrementalId.Next, c.name, c.price)
-             select new Models.ChartItem(product, c.count)).ToList();
+             select new Models.CartItem(product, c.count)).ToList();
+        public static List<Models.Product> Products
+        =>
+            (from c in TupleCartItemArray
+             select new Models.Product(IncrementalId.Next, c.name, c.price)).ToList();
 
     }
 }

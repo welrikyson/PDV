@@ -54,7 +54,7 @@ namespace PDV.Controls
         // This method raises the SpaceKeyDown event
         protected virtual void RaiseSpaceKeyDownEvent()
         {
-            RoutedEventArgs args = new RoutedEventArgs(MKeyDownEvent);
+            RoutedEventArgs args = new (MKeyDownEvent);
             RaiseEvent(args);
         }
         public bool SholdConsumeOnKeyMPressed { get; set; } = true;

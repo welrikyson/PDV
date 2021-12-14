@@ -24,11 +24,8 @@
     <Style x:Key="AppBody1TextBlock" TargetType="TextBlock" >
         <Setter Property="FontSize" Value="14" />
     </Style>
-
     <SolidColorBrush x:Key="AppDarkBackground">#FFFFFF</SolidColorBrush>
     <Style x:Key="AppOutlinedButton" TargetType="Button" BasedOn="{StaticResource ButtonDashedPrimary}"/>
     <Style x:Key="AppOutlinedTextBox" TargetType="TextBox" BasedOn="{StaticResource TextBoxExtend}"/>
-    <Style x:Key="AppFlatButton" TargetType="Button" BasedOn="{StaticResource ButtonDashedInfo}"/>
-    
-
+    <Style x:Key="AppFlatButton" TargetType="Button" BasedOn="{StaticResource ButtonDashedPrimary}"/>
 </ResourceDictionary>

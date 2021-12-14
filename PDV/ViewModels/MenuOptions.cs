@@ -1,10 +1,11 @@
 ﻿using Microsoft.Toolkit.Mvvm.Input;
+using PDV.Interfaces;
 using System;
 using System.Windows.Input;
 
 namespace PDV.ViewModels
 {
-    public class MenuOptions
+    public class MenuOptions: IDialog<MenuOptionItem>
     {
         public string Title { get; set; } = "Menu geral";
         public MenuOption MenuOption { get; set; }
@@ -19,11 +20,12 @@ namespace PDV.ViewModels
 
         private void OnOptionSectedHandler(MenuOptionItem obj)
         {
+            EventResult?.Invoke(obj);
             OptionSelected?.Invoke(obj);
         }
 
         public event OnConfirmSelection? OptionSelected;
-
+        public event EventResult<MenuOptionItem>? EventResult;
     }
     public delegate void OnConfirmSelection(MenuOptionItem item);
     public class MenuOptionItem

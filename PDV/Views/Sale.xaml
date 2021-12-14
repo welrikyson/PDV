@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PDV.Views"
+      xmlns:models="clr-namespace:PDV.Models"
       xmlns:vm="clr-namespace:PDV.ViewModels" xmlns:mah="https://handyorg.github.io/handycontrol"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
@@ -11,6 +12,9 @@
       FocusManager.IsFocusScope="True"
       FocusManager.FocusedElement="{Binding ElementName=SearchTermTxb}"
       d:DataContext="{d:DesignInstance Type={x:Type vm:Sale}}">
+    <Page.InputBindings>
+        <KeyBinding Key="Return" Modifiers="Ctrl" Command="{Binding Finalize}"/>
+    </Page.InputBindings>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -41,7 +45,7 @@
             <Grid Grid.Row="1" Grid.RowSpan="3"  
                       Margin="8 16 16 16" 
                       DataContext="{Binding ElementName=listCartItems,Path=SelectedItem}"
-                      d:DataContext="{d:DesignInstance Type={x:Type models:ChartItem}}">
+                      d:DataContext="{d:DesignInstance Type={x:Type models:CartItem}}">
                 <Grid.Resources>
                     <Style TargetType="TextBox" BasedOn="{StaticResource AppOutlinedTextBox}">
                         <Setter Property="FontSize" Value="18" />
@@ -57,7 +61,7 @@
                             </TextBlock>
                         </StackPanel>
                         <Border BorderThickness="1" CornerRadius="16">
-                            <Image Height="200" Width="400" Source="pack://application:,,,/Images/item.jpg" />
+                            <Image Height="200" Width="400" Source="pack://application:,,,/Images/drink-fanta.png" />
                         </Border>
                         <TextBlock VerticalAlignment="Center" Margin="8 0 0 0"
                                        Text="{Binding Product.Name}" Width="150" TextAlignment="Center"
@@ -68,7 +72,7 @@
                         <StackPanel Margin="0 8 0 0">
                             <TextBlock Text="Quantidade" Width="100" VerticalAlignment="Bottom" 
                                            HorizontalAlignment="Left" />
-                            <mah:NumericUpDown Value="{Binding Count}" 
+                            <mah:NumericUpDown Value="{Binding Count}" HorizontalContentAlignment="Center"
                                                Minimum="1" Maximum="9999" 
                                                FontSize="20" MinWidth="120" KeyDown="NumericUpDown_KeyDown"/>
                         </StackPanel>
@@ -102,7 +106,7 @@
                       Grid.Column="1" DataContext="{Binding Cart}">
                 <DataGrid x:Name="listCartItems" Margin="16"
                               ItemsSource="{Binding CartItems}" AutoGenerateColumns="False"
-                              SelectedIndex="0">
+                              SelectedIndex="0" MouseDoubleClick="listCartItems_MouseDoubleClick">                   
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Product" Binding="{Binding Product.Name}" IsReadOnly="True"/>
                         <DataGridTextColumn Header="Price" Binding="{Binding Product.Price}" IsReadOnly="True"/>
@@ -127,7 +131,7 @@
                     FINALIZAR<LineBreak/>
                     <Run FontSize="12">(crtl+enter)</Run>
                 </TextBlock>
-            </Button>
+            </Button>            
         </StackPanel>
     </Grid>
 </Page>

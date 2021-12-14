@@ -1,11 +1,5 @@
 ﻿using Microsoft.Xaml.Behaviors;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
@@ -54,7 +48,8 @@ namespace PDV.Behaviors
             if (HasActivityValid && Status == InactivityStatus.Active)
             {
                 RestartTimer();
-            }else if(Status == InactivityStatus.Inactive && HasActivityValid)
+            }
+            else if (Status == InactivityStatus.Inactive && HasActivityValid)
             {
                 Status = InactivityStatus.Active;
                 OnStatusChangedEvent?.Invoke(new(Status));
@@ -113,9 +108,6 @@ namespace PDV.Behaviors
         Active,
         Inactive,
     }
-
-
-
     public class ShowOnInactivityDetectedBehavior : Behavior<Grid>
     {
         private InativityManager? InativityManager;
@@ -144,7 +136,5 @@ namespace PDV.Behaviors
             };
 
         }
-
-
     }
 }

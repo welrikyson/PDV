@@ -12,28 +12,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Reactive;
+using System.Reactive.Linq;
 
 namespace PDV.Views
 {
     /// <summary>
-    /// Interaction logic for Sale.xaml
+    /// Interaction logic for ProductFinder.xaml
     /// </summary>
-    public partial class Sale : Page
-    {
-        public Sale()
+    public partial class ProductFinder : UserControl
+    {        
+        public ProductFinder()
         {
             InitializeComponent();            
         }       
-
-        private void NumericUpDown_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-                SearchTermTxb.Focus();
-        }
-
-        private void listCartItems_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-
-        }        
     }
 }

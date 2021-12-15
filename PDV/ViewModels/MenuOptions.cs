@@ -6,7 +6,7 @@ using System.Windows.Input;
 namespace PDV.ViewModels
 {
     public class MenuOptions: IDialog<MenuOptionItem>
-    {
+    {        
         public string Title { get; set; } = "Menu geral";
         public MenuOption MenuOption { get; set; }
 
@@ -15,8 +15,7 @@ namespace PDV.ViewModels
             MenuOption = new MenuOption(optionFindItem: new MenuOptionFind(OnOptionSectedHandler),
                                         optionClose: new MenuOptionItem(Key.D3, "Remove", OnOptionSectedHandler),
                                         optionEnd: new MenuOptionItem(Key.D4, "Other", OnOptionSectedHandler));
-
-        }
+        }        
 
         private void OnOptionSectedHandler(MenuOptionItem obj)
         {

@@ -1,4 +1,5 @@
 ﻿using PDV.ViewModels;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -18,7 +19,7 @@ namespace PDV.Interfaces
 
     public interface IDialog<TResult>
     {
-        event EventResult<TResult> EventResult;
+        event EventResult<TResult> EventResult;        
     }
 
     public delegate void EventResult<T>(T? result);

@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Reactive;
 using System.Reactive.Linq;
+using PDV.Controls;
 
 namespace PDV.Views
 {
@@ -25,6 +26,8 @@ namespace PDV.Views
         public ProductFinder()
         {
             InitializeComponent();            
-        }       
+        }
+
+        public Search Search { get => search; }
     }
 }

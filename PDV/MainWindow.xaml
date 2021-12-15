@@ -19,7 +19,7 @@
            xmlns:vms="clr-namespace:PDV.ViewModels"
            xmlns:view="clr-namespace:PDV.Views"
            WindowStartupLocation="CenterScreen"
-           MinHeight="700" MinWidth="1200" FocusManager.IsFocusScope="True"
+           MinHeight="700" MinWidth="1200"
            d:DataContext="{d:DesignInstance Type=local:MainViewModel, IsDesignTimeCreatable=True}">
     <Window.Resources>
         <DataTemplate DataType="{x:Type vms:MenuOptions}">
@@ -34,25 +34,6 @@
         <DataTemplate DataType="{x:Type vms:ProductFinder}">
             <view:ProductFinder />
         </DataTemplate>
-    </Window.Resources>    
-    <Grid>
-        <i:Interaction.Behaviors>
-            <behavior:ShowOnInactivityDetectedBehavior InativityTime="00:00:10">
-                <behavior:ShowOnInactivityDetectedBehavior.Content>
-                    <views:InactivityPage />
-                </behavior:ShowOnInactivityDetectedBehavior.Content>
-            </behavior:ShowOnInactivityDetectedBehavior>
-        </i:Interaction.Behaviors>
-        <controls:MainGrid>
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MKeyDown">
-                    <i:EventTrigger.Actions>
-                        <i:InvokeCommandAction Command="{Binding OpenMenu}"/>
-                    </i:EventTrigger.Actions>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-            <Frame Template="{StaticResource FrameWithNavegationBar}" Content="{Binding CurrentViewModel,UpdateSourceTrigger=PropertyChanged,Mode=OneWay}"/>
-        </controls:MainGrid>
-        <controls:Dialog DialogService="{Binding DialogService}"/>
-    </Grid>
+    </Window.Resources>
+    <view:Sale x:Name="Sale"/>    
 </hc:Window>

@@ -35,7 +35,7 @@ namespace PDV.ViewModels
                     taskCompletion.SetResult(default);
                 }
             });
-            ShowDialog(dialog);
+            ShowDialog(dialog);            
 
             return taskCompletion.Task;
         }

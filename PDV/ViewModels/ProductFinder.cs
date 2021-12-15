@@ -19,7 +19,7 @@ namespace PDV.ViewModels
 {
     public class ProductFinder : ObservableObject, IDialog<Product>
     {
-        public event EventResult<Product>? EventResult;
+        public event EventResult<Product>? EventResult;        
         public List<Product> Products { get; set; }
 
         public ICommand Confirm { get; }
@@ -69,6 +69,6 @@ namespace PDV.ViewModels
         private void ConfirmHandler(Product? product)
         {
             EventResult?.Invoke(product);
-        }
+        }       
     }
 }

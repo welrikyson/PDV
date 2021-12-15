@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace PDV.Components.UserControls
 {
@@ -11,6 +12,13 @@ namespace PDV.Components.UserControls
         public Option()
         {
             InitializeComponent();
-        }        
+        }
+
+        protected override void OnGotKeyboardFocus(KeyboardFocusChangedEventArgs e)
+        {
+            base.OnGotKeyboardFocus(e);
+            btn.Focus();
+        }
+
     }
 }

@@ -25,6 +25,7 @@ namespace PDV.Views
             {
                 ViewModel = viewModel;
             }
+            Sale.DataContext = new ViewModels.Sale();
         }
     }
 }

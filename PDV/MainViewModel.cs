@@ -33,11 +33,13 @@ namespace PDV
         {
             var menuOptions = new MenuOptions();
             var option = await DialogService.Show(menuOptions);
+            
             if (option == null) return;
 
             if (option is MenuOptionFind)
-            {
+            {                
                 var product = await DialogService.Show(new ProductFinder());
+                
 
                 if (product != null && CurrentViewModel is Sale sale)
                 {

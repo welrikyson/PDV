@@ -1,8 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:PDV.Controls" 
-                    xmlns:sys="clr-namespace:System;assembly=System.Runtime" 
-                    >
+                    xmlns:controls="clr-namespace:PDV.Controls">
     <Style x:Key="GridGlass" TargetType="Grid">
         <Setter Property="Visibility" Value="Hidden" />
         <Setter Property="Focusable" Value="False" />
@@ -30,23 +28,23 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
-                        <Grid>
+                        <Grid Focusable="False">
                             <Grid Style="{StaticResource GridGlass}" Focusable="False" x:Name="Glass" Visibility="{TemplateBinding Visibility}"/>
-                            <Grid Focusable="False"
-                                  VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <StackPanel Margin="8 0 8 16">
-                                    <Button IsCancel="True" Focusable="False"
+
+                            <StackPanel Margin="8 0 8 16"
+                                            Focusable="False" VerticalAlignment="Center" 
+                                            HorizontalAlignment="Center">
+                                <Button IsCancel="True" Focusable="False"
                                             HorizontalAlignment="Right"
                                             Content="x"
                                             Style="{StaticResource AppFlatButton}"
                                             Command="{x:Static controls:DialogCommands.Close}"/>
-                                    <ContentPresenter x:Name="ContentPresenter" 
+                                <ContentPresenter x:Name="ContentPresenter" 
                                                       Grid.Row="1" 
                                                       Content="{TemplateBinding ContentControl.Content}" 
                                                       ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" 
                                                       ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}"/>
-                                </StackPanel>
-                            </Grid>
+                            </StackPanel>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>

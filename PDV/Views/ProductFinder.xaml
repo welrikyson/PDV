@@ -10,7 +10,7 @@
              d:DataContext="{d:DesignInstance Type=vm:ProductFinder, IsDesignTimeCreatable=True}"
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel>
-        <controls:Search Height="400" Command="{Binding Find}" Confirm="{Binding Confirm}" Results="{Binding Products,UpdateSourceTrigger=PropertyChanged}">
+        <controls:Search x:Name="search" Height="400" Command="{Binding Find}" Confirm="{Binding Confirm}" Results="{Binding Products,UpdateSourceTrigger=PropertyChanged}">
             <controls:Search.ResultItemTemplate>
                 <DataTemplate>
                     <WrapPanel>
